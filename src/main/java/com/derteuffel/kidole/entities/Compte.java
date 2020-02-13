@@ -2,10 +2,7 @@ package com.derteuffel.kidole.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -20,4 +17,7 @@ public class Compte implements Serializable {
     private String username;
     private String password;
     private Boolean active;
+
+    @OneToOne
+    private User user;
 }

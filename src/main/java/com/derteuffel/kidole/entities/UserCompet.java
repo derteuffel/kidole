@@ -17,11 +17,5 @@ public class UserCompet implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-
-    private Long userId;
-    private Long competitionId;
-
-    private Competition competition;
-
     private String description;
 }

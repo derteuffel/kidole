@@ -18,10 +18,5 @@ public class UserTeam implements Serializable {
     @GeneratedValue
     private Long id;
 
-    private Long userId;
-    private Long teamId;
-
-    private Team team;
-
     private String description;
 }

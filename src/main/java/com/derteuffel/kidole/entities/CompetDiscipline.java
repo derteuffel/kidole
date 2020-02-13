@@ -19,7 +19,5 @@ public class CompetDiscipline implements Serializable {
     private Long id;
 
     private String name;
-    private Long competitionId;
-    private Long disciplineId;
-    private Competition competition;
+
 }

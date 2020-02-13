@@ -2,11 +2,9 @@ package com.derteuffel.kidole.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,4 +16,7 @@ public class Site implements Serializable {
     private  Long id;
     private String name;
     private String libelle;
+
+    @ManyToMany(mappedBy = "sites")
+    private Set<Poule> poules;
 }

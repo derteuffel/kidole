@@ -2,12 +2,11 @@ package com.derteuffel.kidole.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +26,27 @@ public class User implements Serializable {
     private String country;
     private String region;
     private String ville;
+
+    @OneToOne(mappedBy = "user")
+    private Compte compte;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_team",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    private Set<Team> teams;
+
+    @OneToMany(mappedBy = "user")
+    private List<Accreditation> accreditations;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_compet",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "competition_id")
+    )
+    private Set<Competition> competitions;
 }

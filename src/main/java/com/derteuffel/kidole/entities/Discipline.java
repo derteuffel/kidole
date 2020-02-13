@@ -2,11 +2,10 @@ package com.derteuffel.kidole.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,4 +18,10 @@ public class Discipline implements Serializable {
 
     private String name;
     private String type;
+
+    @ManyToMany(mappedBy = "disciplines")
+    private Set<Competition> competitions;
+
+    @OneToMany(mappedBy = "discipline")
+    private List<Confrontation> confrontations;
 }

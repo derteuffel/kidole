@@ -17,11 +17,6 @@ public class PouleSite implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private Long pouleId;
-    private Long siteId;
-
-    private Site site;
-
     private String description;
 
 }

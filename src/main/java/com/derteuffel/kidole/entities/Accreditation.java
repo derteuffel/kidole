@@ -1,11 +1,9 @@
 package com.derteuffel.kidole.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -20,4 +18,8 @@ public class Accreditation implements Serializable {
     private String name;
     private String status;
     private String description;
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 }

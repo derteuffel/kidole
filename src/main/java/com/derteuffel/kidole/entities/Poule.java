@@ -2,11 +2,10 @@ package com.derteuffel.kidole.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,4 +17,15 @@ public class Poule implements Serializable {
     private Long id;
     private String name;
     private String libelle;
+
+    @OneToMany(mappedBy = "poule")
+    private List<Confrontation> confrontations;
+
+    @ManyToMany
+    @JoinTable(
+            name = "poule_site",
+            joinColumns = @JoinColumn(name = "poule_id"),
+            inverseJoinColumns = @JoinColumn(name = "site_id")
+    )
+    private Set<Site> sites;
 }
