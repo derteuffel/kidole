@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -34,4 +35,7 @@ public class Competition implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "discipline_id")
     )
     private Set<Discipline> disciplines;
+
+    @OneToMany(mappedBy = "competition")
+    private List<Accreditation> accreditations;
 }
