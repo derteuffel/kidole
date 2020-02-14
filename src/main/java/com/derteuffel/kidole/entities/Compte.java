@@ -20,6 +20,7 @@ public class Compte implements Serializable {
     private String username;
     private String password;
     private Boolean active;
+    private String email;
 
     @OneToOne
     private User user;

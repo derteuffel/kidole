@@ -30,7 +30,7 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String photo;
-    private Date birthday;
+    private String birthday;
     private String country;
     private String region;
     private String ville;
