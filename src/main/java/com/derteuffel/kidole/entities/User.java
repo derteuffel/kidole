@@ -1,6 +1,12 @@
 package com.derteuffel.kidole.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +17,8 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "user")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@AllArgsConstructor @NoArgsConstructor
 public class User implements Serializable {
 
     @Id
@@ -37,9 +45,11 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
+    @JsonIgnoreProperties("users")
     private Set<Team> teams;
 
     @OneToMany(mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private List<Accreditation> accreditations;
 
     @ManyToMany
@@ -48,5 +58,6 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "competition_id")
     )
+    @JsonIgnoreProperties("users")
     private Set<Competition> competitions;
 }

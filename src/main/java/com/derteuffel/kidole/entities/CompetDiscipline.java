@@ -1,6 +1,8 @@
 package com.derteuffel.kidole.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "compet_discipline")
+@AllArgsConstructor @NoArgsConstructor
 public class CompetDiscipline implements Serializable {
 
     @Id

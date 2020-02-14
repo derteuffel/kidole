@@ -1,7 +1,10 @@
 package com.derteuffel.kidole.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "confrontation")
+@AllArgsConstructor @NoArgsConstructor
 public class Confrontation implements Serializable {
 
 
@@ -28,6 +32,7 @@ public class Confrontation implements Serializable {
             joinColumns = @JoinColumn(name = "confrontation_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
+    @JsonIgnoreProperties("confrontations")
     private Set<Team> teams;
 
     @ManyToOne
