@@ -36,6 +36,4 @@ public class Competition implements Serializable {
     )
     private Set<Discipline> disciplines;
 
-    @OneToMany(mappedBy = "competition")
-    private List<Accreditation> accreditations;
 }
