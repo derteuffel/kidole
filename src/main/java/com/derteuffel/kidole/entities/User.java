@@ -54,7 +54,7 @@ public class User implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "user_compet",
+            name = "user_competition",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "competition_id")
     )

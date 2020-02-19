@@ -10,7 +10,8 @@ import java.util.List;
 public interface AccreditationRepository extends JpaRepository<Accreditation, Long> {
 
     List<Accreditation> findAllByUser_Id(Long id);
-    List<Accreditation> findAllByCompetition_Id(Long id);
 
     List<Accreditation> findAllByStatus(String status);
+
+    Accreditation findByUserCompet_Id(Long id);
 }

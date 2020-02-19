@@ -26,7 +26,6 @@ public class Accreditation implements Serializable {
     @JsonIgnore
     private User user;
 
-    @ManyToOne
-    @JsonIgnore
-    private Competition competition;
+    @OneToOne(mappedBy = "accreditation")
+    private UserCompet userCompet;
 }
