@@ -50,20 +50,28 @@ public class KidoleServiceImpl implements IKidoleInitService{
     @Override
     public void initCompetDisciplines() {
 
-        Stream.of("ae").forEach(cd ->{
+/*        Stream.of("ae").forEach(cd ->{
             CompetDiscipline competDiscipline = new CompetDiscipline();
             competDiscipline.setName(cd);
             competDisciplineRepository.save(competDiscipline);
-        });
+        });*/
+    }
+    @Override
+    public void initCompetitions() {
+/*        Stream.of("Coupe du monde de football", "NBA", "coupe du monde de volleyBall").forEach(c ->{
+            Competition competition = new Competition();
+            competition.setName(c);
+            competitionRepository.save(competition);
+        });*/
     }
 
     @Override
     public void initComptes() {
-        Stream.of("Edouga","peguy", "django").forEach(c -> {
+/*        Stream.of("Edouga","peguy", "django").forEach(c -> {
             Compte compte = new Compte();
             compte.setUsername(c);
             compteRepository.save(compte);
-        });
+        });*/
 
     }
 
@@ -74,32 +82,41 @@ public class KidoleServiceImpl implements IKidoleInitService{
 
     @Override
     public void initConfrontationTeams() {
-        Stream.of("ma première description", "une description").forEach(com ->{
+/*        Stream.of("ma première description", "une description").forEach(com ->{
             ConfrontationTeam confrontationTeam = new ConfrontationTeam();
             confrontationTeam.setDecription(com);
             confrontationTeamRepository.save(confrontationTeam);
-        });
+        });*/
 
     }
 
     @Override
     public void initDisciplines() {
 
-        Stream.of("football", "Basketball", "volleyball").forEach(d ->{
+/*        Stream.of("football", "Basketball", "volleyball").forEach(d ->{
             Discipline discipline = new Discipline();
             discipline.setName(d);
             disciplineRepository.save(discipline);
-        });
+        });*/
     }
 
     @Override
     public void initPoules() {
-
+/*
         Stream.of("A", "B", "C").forEach(p ->{
             Poule poule = new Poule();
             poule.setName(p);
             pouleRepository.save(poule);
-        });
+        });*/
+    }
+
+    @Override
+    public void initPouleSite() {
+/*        Stream.of("AB", "CD").forEach(ps ->{
+            PouleSite pouleSite = new PouleSite();
+            pouleSite.setDescription(ps);
+            pouleSiteRepository.save(pouleSite);
+        });*/
     }
 
     @Override
@@ -115,48 +132,30 @@ public class KidoleServiceImpl implements IKidoleInitService{
 
     @Override
     public void initUsers() {
-       Stream.of("Enzo", "Lamazo", "kutemodojika").forEach(u->{
+/*       Stream.of("Enzo", "Lamazo", "kutemodojika").forEach(u->{
            User user = new User();
            user.setLastname(u);
            userRepository.save(user);
-       });
+       });*/
     }
-
-    @Override
-    public void initUserTeams() {
-        Stream.of("AZ", "AZ").forEach(ut -> {
-            UserTeam userTeam = new UserTeam();
-            userTeam.setDescription(ut);
-            userTeamRepository.save(userTeam);
-        });
-    }
-
-    @Override
-    public void initPouleSite() {
-        Stream.of("AB", "CD").forEach(ps ->{
-            PouleSite pouleSite = new PouleSite();
-            pouleSite.setDescription(ps);
-            pouleSiteRepository.save(pouleSite);
-        });
-    }
-
     @Override
     public void initUserCompet() {
-
+/*
         Stream.of("ma", "mo").forEach( uc->{
             UserCompet userCompet = new UserCompet();
             userCompet.setDescription(uc);
             userCompetRepository.save(userCompet);
-        });
+        });*/
 
     }
 
     @Override
-    public void initCompetitions() {
-        Stream.of("Coupe du monde de football", "NBA", "coupe du monde de volleyBall").forEach(c ->{
-            Competition competition = new Competition();
-            competition.setName(c);
-            competitionRepository.save(competition);
-        });
+    public void initUserTeams() {
+/*        Stream.of("AZ", "AZ").forEach(ut -> {
+            UserTeam userTeam = new UserTeam();
+            userTeam.setDescription(ut);
+            userTeamRepository.save(userTeam);
+        });*/
     }
+
 }

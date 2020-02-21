@@ -3,6 +3,7 @@ package com.derteuffel.kidole.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,12 +18,19 @@ public class Competition implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String code;
+    @NotNull
     private String name;
+    @NotNull
     private Date dateDebut;
+    @NotNull
     private Date dateFin;
+    @NotNull
     private Date debutAccreditation;
+    @NotNull
     private Date finAccreditation;
+    @NotNull
     private String status;
 
     @ManyToMany(mappedBy = "competitions")

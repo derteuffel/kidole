@@ -20,18 +20,20 @@ public class KidoleApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         iKidoleInitService.initAccreditations();
         iKidoleInitService.initCompetDisciplines();
+        iKidoleInitService.initCompetitions();
         iKidoleInitService.initComptes();
         iKidoleInitService.initConfrontations();
         iKidoleInitService.initConfrontationTeams();
         iKidoleInitService.initDisciplines();
         iKidoleInitService.initPoules();
+        iKidoleInitService.initPouleSite();
         iKidoleInitService.initSites();
         iKidoleInitService.initTeams();
         iKidoleInitService.initUsers();
-        iKidoleInitService.initUserTeams();
-        iKidoleInitService.initPouleSite();
         iKidoleInitService.initUserCompet();
-        iKidoleInitService.initCompetitions();
+        iKidoleInitService.initUserTeams();
+
+
 
     }
 }

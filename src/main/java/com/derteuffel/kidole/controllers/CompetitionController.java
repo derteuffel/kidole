@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/competitions")
+@CrossOrigin("*")
 public class CompetitionController {
 
 

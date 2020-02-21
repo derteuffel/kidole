@@ -13,6 +13,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/kidole/users")
+@CrossOrigin("*")
 public class UserController {
 
 
