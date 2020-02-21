@@ -93,8 +93,12 @@ public class AccreditationController {
     @PostMapping("/{userId}/{competId}")
     public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long competId) {
 
+        User user = userRepository.getOne(userId);
+        Competition competition = competitionRepository.getOne(competId);
+        accreditation.setCompetition(competition);
+        accreditation.setUser(user);
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/jj hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd hh:mm");
         accreditation.setDate(dateFormat.format(date));
         accreditation.setStatus(ECompetition.ATTENTE.toString());
         try {

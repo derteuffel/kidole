@@ -81,12 +81,20 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<User>  save(@RequestBody User user) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        user.setBirthday(dateFormat.format(user.getBirthday()));
-        try {
-            User _user = userRepository.save(user);
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>((User) null, HttpStatus.EXPECTATION_FAILED);
+        user.setBirthday(user.getBirthday());
+        //user.setBirthday(dateFormat.format(user.getBirthday()));
+        Optional<User> userOptional = userRepository.findByFirstnameOrLastname(user.getFirstname(),user.getLastname());
+
+        if (userOptional.isPresent()){
+
+            return new ResponseEntity<>(HttpStatus.FOUND);
+        }else {
+            try {
+                User _user = userRepository.save(user);
+                return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>((User) null, HttpStatus.EXPECTATION_FAILED);
+            }
         }
     }
 

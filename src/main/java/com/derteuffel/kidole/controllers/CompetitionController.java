@@ -59,7 +59,10 @@ public class CompetitionController {
     @PostMapping("")
     public ResponseEntity<Competition>  save(@RequestBody Competition competition) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat year = new SimpleDateFormat("yyyy    MM");
         competition.setStatus(ECompetition.ATTENTE.toString());
+        competition.setCode("#C"+competitionRepository.findAll().size()+year.format(new Date()));
+        System.out.println(competition.getCode());
         try {
             Competition _competition = competitionRepository.save(competition);
             return new ResponseEntity<>(_competition, HttpStatus.CREATED);

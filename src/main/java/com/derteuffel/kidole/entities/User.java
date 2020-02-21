@@ -41,12 +41,4 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<Accreditation> accreditations;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_competition",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "competition_id")
-    )
-    private Set<Competition> competitions;
 }
