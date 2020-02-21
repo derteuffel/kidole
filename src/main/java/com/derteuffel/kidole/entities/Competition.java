@@ -25,8 +25,8 @@ public class Competition implements Serializable {
     private Date finAccreditation;
     private String status;
 
-    @ManyToMany(mappedBy = "competitions")
-    private Set<User> users;
+    @OneToMany(mappedBy = "competition")
+    private List<Accreditation> accreditations;
 
     @ManyToMany
     @JoinTable(

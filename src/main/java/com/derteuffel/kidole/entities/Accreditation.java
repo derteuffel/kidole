@@ -17,12 +17,14 @@ public class Accreditation implements Serializable {
 
     private String name;
     private String status;
+    private String date;
     private String description;
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
-    @OneToOne(mappedBy = "accreditation")
-    private UserCompet userCompet;
+    @ManyToOne
+    @JsonIgnore
+    private Competition competition;
 }

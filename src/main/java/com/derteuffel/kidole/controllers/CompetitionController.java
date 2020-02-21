@@ -3,7 +3,6 @@ package com.derteuffel.kidole.controllers;
 import com.derteuffel.kidole.entities.*;
 import com.derteuffel.kidole.repositories.AccreditationRepository;
 import com.derteuffel.kidole.repositories.CompetitionRepository;
-import com.derteuffel.kidole.repositories.UserCompetRepository;
 import com.derteuffel.kidole.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +23,6 @@ public class CompetitionController {
 
     @Autowired
     private CompetitionRepository competitionRepository;
-
-    @Autowired
-    private UserCompetRepository userCompetRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AccreditationRepository accreditationRepository;
 
      //
     // ----- Competition methods -------//
@@ -133,49 +123,5 @@ public class CompetitionController {
      //
     // ----- Accreditation for an user to a competition  methods -------//
                                                                        //
-
-    @PostMapping("/accreditation/{userId}/{competitionId}")
-    public ResponseEntity<List<Object>>  save(@RequestBody UserCompet userCompet, @RequestBody Accreditation accreditation, @PathVariable Long userId, @PathVariable Long competitionId) {
-        User user = userRepository.getOne(userId);
-        Competition competition = competitionRepository.getOne(competitionId);
-        accreditation.setStatus(ECompetition.ATTENTE.toString());
-        if (!competition.getUsers().contains(user)){
-            competition.getUsers().add(user);
-            competitionRepository.save(competition);
-        }else {
-            new Exception("this user is already inside this competition");
-        }
-
-        try {
-            userCompet.setUserId(user.getId());
-            userCompet.setCompetId(competition.getId());
-            UserCompet _userCompet = userCompetRepository.save(userCompet);
-            accreditation.setUserCompet(_userCompet);
-            accreditationRepository.save(accreditation);
-            List<Object> elements = new ArrayList<>();
-            elements.add(_userCompet);
-            elements.add(accreditation);
-            return new ResponseEntity<>(elements, HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>((List<Object>) null, HttpStatus.EXPECTATION_FAILED);
-        }
-    }
-
-    @PutMapping("/accreditations/{id}")
-    public ResponseEntity<Accreditation> validateAccreditation(@RequestBody Accreditation accreditation, @PathVariable Long id){
-        Accreditation accreditation1 = accreditationRepository.findByUserCompet_Id(id);
-
-        accreditation1.setStatus(ECompetition.ENCOURS.toString());
-        accreditation1.setDescription(accreditation.getDescription());
-        accreditation1.setName(accreditation.getName());
-
-        try {
-            accreditationRepository.save(accreditation1);
-            return new ResponseEntity<>(accreditation1, HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>((Accreditation)null,HttpStatus.EXPECTATION_FAILED);
-        }
-
-    }
 
 }
