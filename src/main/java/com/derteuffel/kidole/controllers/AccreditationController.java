@@ -98,6 +98,8 @@ public class AccreditationController {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd hh:mm");
         accreditation.setDate(dateFormat.format(date));
+        team.getUsers().add(user);
+        teamRepository.save(team);
         accreditation.setStatus(ECompetition.ATTENTE.toString());
         try {
             Accreditation _accreditation = accreditationRepository.save(accreditation);
