@@ -13,5 +13,5 @@ public interface AccreditationRepository extends JpaRepository<Accreditation, Lo
 
     List<Accreditation> findAllByStatus(String status);
 
-    List<Accreditation> findAllByCompetition_Id(Long id);
+    List<Accreditation> findAllByTeam_Id(Long id);
 }

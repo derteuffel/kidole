@@ -26,5 +26,5 @@ public class Discipline implements Serializable {
     private Competition competition;
 
     @OneToMany(mappedBy = "discipline")
-    private List<Confrontation> confrontations;
+    private List<Team> teams;
 }

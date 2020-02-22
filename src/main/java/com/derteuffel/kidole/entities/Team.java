@@ -1,5 +1,6 @@
 package com.derteuffel.kidole.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,9 +19,17 @@ public class Team implements Serializable {
     private String name;
     private String libelle;
 
-    @ManyToMany(mappedBy = "teams")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "team_user", joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> users;
 
-    @ManyToMany(mappedBy = "teams")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "team_confrontation", joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "confrontation_id", referencedColumnName = "id"))
     private Set<Confrontation> confrontations;
+
+    @ManyToOne
+    @JsonIgnore
+    private Discipline discipline;
 }

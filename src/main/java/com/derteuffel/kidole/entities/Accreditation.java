@@ -26,5 +26,5 @@ public class Accreditation implements Serializable {
 
     @ManyToOne
     @JsonIgnore
-    private Competition competition;
+    private Team team;
 }

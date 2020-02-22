@@ -56,10 +56,26 @@ public class CompetitionController {
         }
     }
 
+    @GetMapping("/disciplines/{id}")
+    public ResponseEntity<List<Discipline>> findAllDiscipline(@PathVariable Long id) {
+        List<Discipline> disciplines = new ArrayList<>();
+        try {
+            Competition competition = competitionRepository.getOne(id);
+
+            competition.getDisciplines().forEach(disciplines :: add);
+            if (disciplines.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(disciplines,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Discipline>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<Competition>  save(@RequestBody Competition competition) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        DateFormat year = new SimpleDateFormat("yyyy    MM");
+        DateFormat year = new SimpleDateFormat("yyyyMM");
         competition.setStatus(ECompetition.ATTENTE.toString());
         competition.setCode("#C"+competitionRepository.findAll().size()+year.format(new Date()));
         System.out.println(competition.getCode());

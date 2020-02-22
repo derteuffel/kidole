@@ -19,24 +19,15 @@ public class Confrontation implements Serializable {
     private Long id;
 
     private String name;
-    private Date dateConfrontation;
+    private String dateConfrontation;
     private String resume;
 
-    @ManyToMany
-    @JoinTable(
-            name = "confrontation_team",
-            joinColumns = @JoinColumn(name = "confrontation_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
+    @ManyToMany(mappedBy = "confrontations")
     private Set<Team> teams;
 
     @ManyToOne
     @JsonIgnore
     private Poule poule;
-
-    @ManyToOne
-    @JsonIgnore
-    private Discipline discipline;
 
 
 

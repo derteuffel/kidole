@@ -31,12 +31,7 @@ public class User implements Serializable {
     private Compte compte;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_team",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
+    @ManyToMany(mappedBy = "users")
     private Set<Team> teams;
 
     @OneToMany(mappedBy = "user")

@@ -27,10 +27,6 @@ public class Competition implements Serializable {
     private String categorie;
 
     @OneToMany(mappedBy = "competition")
-    private List<Accreditation> accreditations;
-
-
-    @OneToMany(mappedBy = "competition")
     private List<Discipline> disciplines;
 
 }

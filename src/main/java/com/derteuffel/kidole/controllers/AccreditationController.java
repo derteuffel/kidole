@@ -1,11 +1,9 @@
 package com.derteuffel.kidole.controllers;
 
-import com.derteuffel.kidole.entities.Accreditation;
-import com.derteuffel.kidole.entities.Competition;
-import com.derteuffel.kidole.entities.ECompetition;
-import com.derteuffel.kidole.entities.User;
+import com.derteuffel.kidole.entities.*;
 import com.derteuffel.kidole.repositories.AccreditationRepository;
 import com.derteuffel.kidole.repositories.CompetitionRepository;
+import com.derteuffel.kidole.repositories.TeamRepository;
 import com.derteuffel.kidole.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +28,7 @@ public class AccreditationController {
     private UserRepository userRepository;
 
     @Autowired
-    private CompetitionRepository competitionRepository;
+    private TeamRepository teamRepository;
 
 
 
@@ -48,11 +46,11 @@ public class AccreditationController {
         }
     }
 
-    @GetMapping("/competition/{id}")
-    public ResponseEntity<List<Accreditation>> findAllByCompetition(@PathVariable Long id) {
+    @GetMapping("/team/{id}")
+    public ResponseEntity<List<Accreditation>> findAllByTeam(@PathVariable Long id) {
         List<Accreditation> accreditations = new ArrayList<>();
         try {
-            accreditationRepository.findAllByCompetition_Id(id).forEach(accreditations :: add);
+            accreditationRepository.findAllByTeam_Id(id).forEach(accreditations :: add);
             if (accreditations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -90,12 +88,12 @@ public class AccreditationController {
         }
     }
 
-    @PostMapping("/{userId}/{competId}")
-    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long competId) {
+    @PostMapping("/{userId}/{teamId}")
+    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long teamId) {
 
         User user = userRepository.getOne(userId);
-        Competition competition = competitionRepository.getOne(competId);
-        accreditation.setCompetition(competition);
+        Team team = teamRepository.getOne(teamId);
+        accreditation.setTeam(team);
         accreditation.setUser(user);
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd hh:mm");
