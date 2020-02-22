@@ -4,9 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -26,7 +24,6 @@ public class User implements Serializable {
     private String country;
     private String region;
     private String ville;
-
     @OneToOne(mappedBy = "user")
     private Compte compte;
 

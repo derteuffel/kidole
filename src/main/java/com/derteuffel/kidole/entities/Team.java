@@ -24,9 +24,7 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> users;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "team_confrontation", joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "confrontation_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "teams")
     private Set<Confrontation> confrontations;
 
     @ManyToOne

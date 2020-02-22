@@ -22,7 +22,9 @@ public class Confrontation implements Serializable {
     private String dateConfrontation;
     private String resume;
 
-    @ManyToMany(mappedBy = "confrontations")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "confrontation_team", joinColumns = @JoinColumn(name = "confrontation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"))
     private Set<Team> teams;
 
     @ManyToOne
