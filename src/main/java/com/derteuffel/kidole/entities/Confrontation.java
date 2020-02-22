@@ -20,6 +20,7 @@ public class Confrontation implements Serializable {
 
     private String name;
     private String dateConfrontation;
+    private String heureConfrontation;
     private String resume;
 
     @ManyToMany(cascade = CascadeType.ALL)

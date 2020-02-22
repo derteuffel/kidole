@@ -12,5 +12,6 @@ public interface ConfrontationRepository extends JpaRepository<Confrontation,Lon
 
     List<Confrontation> findAllByPoule_Id(Long id);
     List<Confrontation> findAllByDateConfrontation(String date);
+    List<Confrontation> findAllByHeureConfrontation(String heure);
     Set<Confrontation> findAllByTeams_Id(Long id);
 }
