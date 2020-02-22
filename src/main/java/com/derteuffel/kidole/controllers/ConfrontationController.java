@@ -1,6 +1,7 @@
 package com.derteuffel.kidole.controllers;
 
 import com.derteuffel.kidole.entities.*;
+import com.derteuffel.kidole.repositories.CompetitionRepository;
 import com.derteuffel.kidole.repositories.ConfrontationRepository;
 import com.derteuffel.kidole.repositories.PouleRepository;
 import com.derteuffel.kidole.repositories.TeamRepository;
@@ -28,6 +29,8 @@ public class ConfrontationController {
 
     @Autowired
     private PouleRepository pouleRepository;
+    @Autowired
+    private CompetitionRepository competitionRepository;
 
 
     @PostMapping("")
@@ -121,6 +124,38 @@ public class ConfrontationController {
         List<Confrontation> confrontations = new ArrayList<>();
         try {
             confrontationRepository.findAllByPoule_Id(id).forEach(confrontations :: add);
+            if (confrontations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(confrontations,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Confrontation>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/site/{id}")
+    public ResponseEntity<List<Confrontation>> findAllBySite(@PathVariable Long id) {
+        List<Confrontation> confrontations = new ArrayList<>();
+        try {
+            confrontationRepository.findAllBySite_Id(id).forEach(confrontations :: add);
+            if (confrontations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(confrontations,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Confrontation>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/competition/{id}")
+    public ResponseEntity<List<Confrontation>> findAllByCompetition(@PathVariable Long id) {
+        Competition competition = competitionRepository.getOne(id);
+
+        List<Confrontation> confrontations = new ArrayList<>();
+        try {
+            for (Site site : competition.getSites()) {
+                site.getConfrontations().forEach(confrontations::add);
+            }
             if (confrontations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

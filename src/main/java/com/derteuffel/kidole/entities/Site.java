@@ -1,9 +1,11 @@
 package com.derteuffel.kidole.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,4 +21,11 @@ public class Site implements Serializable {
 
     @ManyToMany(mappedBy = "sites")
     private Set<Poule> poules;
+
+    @ManyToOne
+    @JsonIgnore
+    private Competition competition;
+
+    @OneToMany(mappedBy = "site")
+    private List<Confrontation> confrontations;
 }

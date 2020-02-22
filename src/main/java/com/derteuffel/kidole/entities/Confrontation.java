@@ -32,6 +32,10 @@ public class Confrontation implements Serializable {
     @JsonIgnore
     private Poule poule;
 
+    @ManyToOne
+    @JsonIgnore
+    private Site site;
+
 
 
 }

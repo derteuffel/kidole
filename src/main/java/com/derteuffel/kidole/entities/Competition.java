@@ -20,6 +20,7 @@ public class Competition implements Serializable {
     private String code;
     private String name;
     private Date dateDebut;
+    private int nbrePoule;
     private Date dateFin;
     private Date debutAccreditation;
     private Date finAccreditation;
@@ -28,5 +29,8 @@ public class Competition implements Serializable {
 
     @OneToMany(mappedBy = "competition")
     private List<Discipline> disciplines;
+
+    @OneToMany(mappedBy = "competition")
+    private List<Site> sites;
 
 }
