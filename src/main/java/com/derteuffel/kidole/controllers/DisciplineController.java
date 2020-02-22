@@ -1,9 +1,6 @@
 package com.derteuffel.kidole.controllers;
 
-import com.derteuffel.kidole.entities.Accreditation;
-import com.derteuffel.kidole.entities.Competition;
-import com.derteuffel.kidole.entities.Discipline;
-import com.derteuffel.kidole.entities.User;
+import com.derteuffel.kidole.entities.*;
 import com.derteuffel.kidole.repositories.CompetitionRepository;
 import com.derteuffel.kidole.repositories.DisciplineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,6 +136,22 @@ public class DisciplineController {
             return new ResponseEntity<>(disciplineRepository.save(_discipline),HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<List<Team>> findAllDiscipline(@PathVariable Long id) {
+        List<Team> teams = new ArrayList<>();
+        try {
+            Discipline discipline = disciplineRepository.getOne(id);
+
+            discipline.getTeams().forEach(teams :: add);
+            if (teams.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(teams,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Team>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
