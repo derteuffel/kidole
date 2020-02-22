@@ -24,16 +24,13 @@ public class Competition implements Serializable {
     private Date debutAccreditation;
     private Date finAccreditation;
     private String status;
+    private String categorie;
 
     @OneToMany(mappedBy = "competition")
     private List<Accreditation> accreditations;
 
-    @ManyToMany
-    @JoinTable(
-            name = "compet_discipline",
-            joinColumns = @JoinColumn(name = "compet_id"),
-            inverseJoinColumns = @JoinColumn(name = "discipline_id")
-    )
-    private Set<Discipline> disciplines;
+
+    @OneToMany(mappedBy = "competition")
+    private List<Discipline> disciplines;
 
 }

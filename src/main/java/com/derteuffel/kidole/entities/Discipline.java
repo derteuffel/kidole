@@ -1,5 +1,6 @@
 package com.derteuffel.kidole.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,9 +19,11 @@ public class Discipline implements Serializable {
 
     private String name;
     private String type;
+    private int nbreEquipe;
 
-    @ManyToMany(mappedBy = "disciplines")
-    private Set<Competition> competitions;
+    @ManyToOne
+    @JsonIgnore
+    private Competition competition;
 
     @OneToMany(mappedBy = "discipline")
     private List<Confrontation> confrontations;
