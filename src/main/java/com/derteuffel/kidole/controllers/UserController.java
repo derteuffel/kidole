@@ -1,6 +1,9 @@
 package com.derteuffel.kidole.controllers;
 
+import com.derteuffel.kidole.entities.Confrontation;
+import com.derteuffel.kidole.entities.Team;
 import com.derteuffel.kidole.entities.User;
+import com.derteuffel.kidole.repositories.TeamRepository;
 import com.derteuffel.kidole.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
 
     @GetMapping("/country/{country}")
@@ -138,6 +144,24 @@ public class UserController {
             return new ResponseEntity<>(userRepository.save(_user),HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<List<Team>> findAllTeams(@PathVariable Long id) {
+        List<Team> teams = new ArrayList<>();
+        try {
+            User user =  userRepository.getOne(id);
+            for (Long ids : user.getTeamIds()){
+                teams.add(teamRepository.getOne(ids));
+            }
+
+            if (teams.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(teams,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Team>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

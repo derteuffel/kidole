@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Data
@@ -26,6 +27,8 @@ public class Team implements Serializable {
 
     @ManyToMany(mappedBy = "teams")
     private Set<Confrontation> confrontations;
+
+    private ArrayList<Long> confrontaionsIds = new ArrayList<>();
 
     @ManyToOne
     @JsonIgnore

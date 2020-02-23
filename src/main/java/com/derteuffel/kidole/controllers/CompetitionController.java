@@ -72,6 +72,22 @@ public class CompetitionController {
         }
     }
 
+    @GetMapping("/sites/{id}")
+    public ResponseEntity<List<Site>> findAllSites(@PathVariable Long id) {
+        List<Site> sites = new ArrayList<>();
+        try {
+            Competition competition = competitionRepository.getOne(id);
+
+            competition.getSites().forEach(sites :: add);
+            if (sites.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(sites,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Site>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<Competition>  save(@RequestBody Competition competition) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");

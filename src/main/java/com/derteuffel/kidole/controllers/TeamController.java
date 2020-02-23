@@ -101,6 +101,24 @@ public class TeamController {
         }
     }
 
+    @GetMapping("/confrontations/{id}")
+    public ResponseEntity<List<Confrontation>> findAllConfrontations(@PathVariable Long id) {
+        List<Confrontation> confrontations = new ArrayList<>();
+        try {
+            Team team = teamRepository.getOne(id);
+            for (Long ids : team.getConfrontaionsIds()){
+                confrontations.add(confrontationRepository.getOne(ids));
+            }
+
+            if (confrontations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(confrontations,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Confrontation>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/accreditations/{id}")
     public ResponseEntity<List<Accreditation>> findAllAccreditation(@PathVariable Long id) {
         List<Accreditation> accreditations = new ArrayList<>();

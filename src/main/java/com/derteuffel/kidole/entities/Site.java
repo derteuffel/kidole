@@ -19,7 +19,10 @@ public class Site implements Serializable {
     private String name;
     private String libelle;
 
-    @ManyToMany(mappedBy = "sites")
+    @ManyToMany@JoinTable(
+            name = "poule_site",
+            joinColumns = @JoinColumn(name = "poule_id"),
+            inverseJoinColumns = @JoinColumn(name = "site_id"))
     private Set<Poule> poules;
 
     @ManyToOne

@@ -31,6 +31,8 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "users")
     private Set<Team> teams;
 
+    private ArrayList<Long> teamIds = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
     private List<Accreditation> accreditations;
 }

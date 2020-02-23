@@ -1,10 +1,7 @@
 package com.derteuffel.kidole.controllers;
 
 import com.derteuffel.kidole.entities.*;
-import com.derteuffel.kidole.repositories.CompetitionRepository;
-import com.derteuffel.kidole.repositories.ConfrontationRepository;
-import com.derteuffel.kidole.repositories.PouleRepository;
-import com.derteuffel.kidole.repositories.TeamRepository;
+import com.derteuffel.kidole.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +29,12 @@ public class ConfrontationController {
     @Autowired
     private CompetitionRepository competitionRepository;
 
+    @Autowired
+    private SiteRepository siteRepository;
 
-    @PostMapping("")
-    public ResponseEntity<Confrontation> save(@RequestBody Confrontation confrontation, ArrayList<Long> teamsIds, Long id) {
+
+    @PostMapping("/{competId}")
+    public ResponseEntity<Confrontation> save(@RequestBody Confrontation confrontation, ArrayList<Long> teamsIds, Long id, @PathVariable Long competId) {
 
         try {
             Poule poule = pouleRepository.getOne(id);
@@ -46,6 +46,8 @@ public class ConfrontationController {
                 for (Long teamId : teamsIds) {
                     Team team = teamRepository.getOne(teamId);
                     confrontation.getTeams().add(team);
+                    team.getConfrontaionsIds().add(confrontation.getId());
+                    teamRepository.save(team);
                 }
             }
             Confrontation _conf = confrontationRepository.save(confrontation);
@@ -63,6 +65,24 @@ public class ConfrontationController {
         Optional<Confrontation> confrontationOptional = confrontationRepository.findById(id);
         if (confrontationOptional.isPresent()){
             return new ResponseEntity<>(confrontationOptional.get(), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/{id}/{siteId}")
+    public ResponseEntity<Confrontation> setSite(@PathVariable Long id, @PathVariable Long siteId) {
+
+        Optional<Confrontation> confrontationOptional = confrontationRepository.findById(id);
+        Site site = siteRepository.getOne(siteId);
+
+        if (confrontationOptional.isPresent()){
+            confrontationOptional.get().setSite(site);
+            site.getPoules().add(confrontationOptional.get().getPoule());
+            siteRepository.save(site);
+            confrontationOptional.get().getPoule().getSiteIds().add(site.getId());
+            pouleRepository.save(confrontationOptional.get().getPoule());
+
+            return new ResponseEntity<>(confrontationRepository.save(confrontationOptional.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
