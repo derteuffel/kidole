@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/accreditations")
+@CrossOrigin("*")
 public class AccreditationController {
 
     @Autowired

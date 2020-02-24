@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/teams")
+@CrossOrigin("*")
 public class TeamController {
 
     @Autowired

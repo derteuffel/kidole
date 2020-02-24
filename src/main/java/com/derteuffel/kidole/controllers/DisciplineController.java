@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/disciplines")
+@CrossOrigin("*")
 public class DisciplineController {
 
     @Autowired

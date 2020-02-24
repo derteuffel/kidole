@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/poules")
+@CrossOrigin("*")
 public class PouleController {
     @Autowired
     private PouleRepository pouleRepository;

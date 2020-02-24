@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/kidole/confrontations")
+@CrossOrigin("*")
 public class ConfrontationController {
 
     @Autowired
