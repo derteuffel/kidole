@@ -25,6 +25,9 @@ public class CompetitionController {
     @Autowired
     private CompetitionRepository competitionRepository;
 
+    @Autowired
+    private AccreditationRepository accreditationRepository;
+
      //
     // ----- Competition methods -------//
                                        //
@@ -148,6 +151,36 @@ public class CompetitionController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @GetMapping("/accreditations/{id}")
+    public ResponseEntity<List<Accreditation>> findAllAccreditation(@PathVariable Long id) {
+        List<Accreditation> accreditations = new ArrayList<>();
+        try {
+            accreditationRepository.findAllByCompetition_Id(id).forEach(accreditations :: add);
+            if (accreditations.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(accreditations,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Accreditation>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<List<User>> findAllUsers(@PathVariable Long id) {
+        List<User> users = new ArrayList<>();
+        try {
+            for (Accreditation accreditation : accreditationRepository.findAllByCompetition_Id(id)){
+                users.add(accreditation.getUser());
+            }
+            if (users.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(users,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<User>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

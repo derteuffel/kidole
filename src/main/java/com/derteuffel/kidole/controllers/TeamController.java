@@ -120,20 +120,6 @@ public class TeamController {
         }
     }
 
-    @GetMapping("/accreditations/{id}")
-    public ResponseEntity<List<Accreditation>> findAllAccreditation(@PathVariable Long id) {
-        List<Accreditation> accreditations = new ArrayList<>();
-        try {
-            accreditationRepository.findAllByTeam_Id(id).forEach(accreditations :: add);
-            if (accreditations.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(accreditations,HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>((List<Accreditation>) null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/discipline/{id}")
     public ResponseEntity<List<Team>> findAllByDiscipline(@PathVariable Long id) {
         List<Team> teams = new ArrayList<>();

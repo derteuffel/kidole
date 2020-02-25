@@ -1,5 +1,6 @@
 package com.derteuffel.kidole.controllers;
 
+import com.derteuffel.kidole.entities.Accreditation;
 import com.derteuffel.kidole.entities.Confrontation;
 import com.derteuffel.kidole.entities.Team;
 import com.derteuffel.kidole.entities.User;

@@ -31,6 +31,9 @@ public class AccreditationController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private CompetitionRepository competitionRepository;
+
 
 
     @GetMapping("")
@@ -47,11 +50,11 @@ public class AccreditationController {
         }
     }
 
-    @GetMapping("/team/{id}")
+    @GetMapping("/competition/{id}")
     public ResponseEntity<List<Accreditation>> findAllByTeam(@PathVariable Long id) {
         List<Accreditation> accreditations = new ArrayList<>();
         try {
-            accreditationRepository.findAllByTeam_Id(id).forEach(accreditations :: add);
+            accreditationRepository.findAllByCompetition_Id(id).forEach(accreditations :: add);
             if (accreditations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -89,18 +92,21 @@ public class AccreditationController {
         }
     }
 
-    @PostMapping("/{userId}/{teamId}")
-    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long teamId) {
+    @PostMapping("/{userId}/{teamId}/{competitionId}")
+    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long teamId, @PathVariable Long competitionId) {
 
         User user = userRepository.getOne(userId);
         Team team = teamRepository.getOne(teamId);
-        accreditation.setTeam(team);
+        Competition competition = competitionRepository.getOne(competitionId);
+        accreditation.setCompetition(competition);
         accreditation.setUser(user);
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd hh:mm");
         accreditation.setDate(dateFormat.format(date));
         team.getUsers().add(user);
         teamRepository.save(team);
+        user.getTeamIds().add(team.getId());
+        userRepository.save(user);
         accreditation.setStatus(ECompetition.ATTENTE.toString());
         try {
             Accreditation _accreditation = accreditationRepository.save(accreditation);

@@ -9,6 +9,7 @@ import java.util.*;
 @Data
 @Entity
 @Table(name = "user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
 
     @Id
@@ -21,18 +22,19 @@ public class User implements Serializable {
     private String phone;
     private String photo;
     private String birthday;
+    private String birthplace;
     private String country;
     private String region;
     private String ville;
+    private ArrayList<Long> teamIds = new ArrayList<>();
     @OneToOne(mappedBy = "user")
     private Compte compte;
-
+    @OneToMany(mappedBy = "user")
+    private List<Accreditation> accreditations;
 
     @ManyToMany(mappedBy = "users")
     private Set<Team> teams;
 
-    private ArrayList<Long> teamIds = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Accreditation> accreditations;
+
 }
