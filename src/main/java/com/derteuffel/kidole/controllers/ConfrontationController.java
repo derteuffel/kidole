@@ -130,7 +130,7 @@ public class ConfrontationController {
     public ResponseEntity<List<Team>> findAllteams(@PathVariable Long id) {
         List<Team> teams = new ArrayList<>();
         try {
-            teamRepository.findAllByConfrontations_Id(id).forEach(teams :: add);
+            confrontationRepository.getOne(id).getTeams().forEach(teams :: add);
             if (teams.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

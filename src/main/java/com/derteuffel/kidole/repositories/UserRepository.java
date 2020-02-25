@@ -14,6 +14,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findAllByCountry(String country);
     List<User> findAllByRegion(String region);
     List<User> findAllByVille(String ville);
-    Set<User> findAllByTeams_Id(Long id);
     Optional<User> findByFirstnameOrLastname(String firstname, String lastname);
 }

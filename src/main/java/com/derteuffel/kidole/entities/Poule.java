@@ -22,8 +22,5 @@ public class Poule implements Serializable {
     @OneToMany(mappedBy = "poule")
     private List<Confrontation> confrontations;
 
-    @ManyToMany(mappedBy = "poules")
-    private Set<Site> sites;
-
     private ArrayList<Long> siteIds = new ArrayList<>();
 }

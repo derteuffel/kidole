@@ -9,5 +9,4 @@ import java.util.Set;
 @Repository
 public interface PouleRepository extends JpaRepository<Poule, Long> {
 
-    Set<Poule> findAllBySites_Id(Long id);
 }

@@ -14,7 +14,6 @@ public interface SparingRepository extends JpaRepository<Sparing,Long> {
     List<Sparing> findAllByCountry(String country);
     List<Sparing> findAllByRegion(String region);
     List<Sparing> findAllByVille(String ville);
-    Set<Sparing> findAllByTeams_Id(Long id);
     Optional<Sparing> findByFirstnameOrLastname(String firstname, String lastname);
     List<Sparing> findAllByDiscipline(String discipline);
     List<Sparing> findAllByManualite(String manualite);

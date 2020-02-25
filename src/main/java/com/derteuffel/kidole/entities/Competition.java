@@ -33,7 +33,5 @@ public class Competition implements Serializable {
     @OneToMany(mappedBy = "competition")
     private List<Site> sites;
 
-    @OneToMany(mappedBy = "competition")
-    private List<Accreditation> accreditations;
 
 }

@@ -106,7 +106,9 @@ public class AccreditationController {
         team.getUsers().add(user);
         teamRepository.save(team);
         user.getTeamIds().add(team.getId());
+        user.getCompetIds().add(competition.getId());
         userRepository.save(user);
+
         accreditation.setStatus(ECompetition.ATTENTE.toString());
         try {
             Accreditation _accreditation = accreditationRepository.save(accreditation);

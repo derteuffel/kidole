@@ -11,7 +11,6 @@ import java.util.Set;
 @Repository
 public interface TeamRepository extends JpaRepository<Team,Long> {
 
-    Set<Team> findAllByConfrontations_Id(Long id);
     List<Team> findAllByDiscipline_Id(Long id);
     Optional<Team> findByDiscipline_Id(Long id);
     Set<Team> findAllByUsers_Id(Long id);

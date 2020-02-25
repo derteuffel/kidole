@@ -14,7 +14,6 @@ public interface AthleteRepository extends JpaRepository<Athlete, Long> {
     List<Athlete> findAllByCountry(String country);
     List<Athlete> findAllByRegion(String region);
     List<Athlete> findAllByVille(String ville);
-    Set<Athlete> findAllByTeams_Id(Long id);
     Optional<Athlete> findByFirstnameOrLastname(String firstname, String lastname);
     List<Athlete> findAllByDiscipline(String discipline);
     List<Athlete> findAllByManualite(String manualite);

@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/kidole/teams")
 @CrossOrigin("*")
+@RequestMapping("/api/kidole/teams")
 public class TeamController {
 
     @Autowired
@@ -92,7 +92,7 @@ public class TeamController {
     public ResponseEntity<List<User>> findAllUsers(@PathVariable Long id) {
         List<User> users = new ArrayList<>();
         try {
-            userRepository.findAllByTeams_Id(id).forEach(users :: add);
+            teamRepository.getOne(id).getUsers().forEach(users :: add);
             if (users.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

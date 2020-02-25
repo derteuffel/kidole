@@ -1,9 +1,7 @@
 package com.derteuffel.kidole.controllers;
 
-import com.derteuffel.kidole.entities.Accreditation;
-import com.derteuffel.kidole.entities.Confrontation;
-import com.derteuffel.kidole.entities.Team;
-import com.derteuffel.kidole.entities.User;
+import com.derteuffel.kidole.entities.*;
+import com.derteuffel.kidole.repositories.CompetitionRepository;
 import com.derteuffel.kidole.repositories.TeamRepository;
 import com.derteuffel.kidole.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,9 @@ public class UserController {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private CompetitionRepository competitionRepository;
 
 
     @GetMapping("/country/{country}")
@@ -164,6 +165,24 @@ public class UserController {
             return new ResponseEntity<>(teams,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>((List<Team>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/compets/{id}")
+    public ResponseEntity<List<Competition>> findAllCompets(@PathVariable Long id) {
+        List<Competition> competitions = new ArrayList<>();
+        try {
+            User user =  userRepository.getOne(id);
+            for (Long ids : user.getCompetIds()){
+                competitions.add(competitionRepository.getOne(ids));
+            }
+
+            if (competitions.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(competitions,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<Competition>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

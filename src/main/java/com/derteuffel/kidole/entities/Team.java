@@ -25,11 +25,6 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> users;
 
-
-
-    @ManyToMany(mappedBy = "teams")
-    private Set<Confrontation> confrontations;
-
     private ArrayList<Long> confrontaionsIds = new ArrayList<>();
 
     @ManyToOne
