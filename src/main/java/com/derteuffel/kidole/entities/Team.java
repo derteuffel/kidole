@@ -1,14 +1,17 @@
 package com.derteuffel.kidole.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
-@Data
+@Data @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "team")
 public class Team implements Serializable {

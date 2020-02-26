@@ -1,12 +1,14 @@
 package com.derteuffel.kidole.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@Data
+@Data @AllArgsConstructor @NoArgsConstructor
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
