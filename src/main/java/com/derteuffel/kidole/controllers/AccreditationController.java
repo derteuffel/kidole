@@ -1,21 +1,16 @@
 package com.derteuffel.kidole.controllers;
 
 import com.derteuffel.kidole.entities.*;
-import com.derteuffel.kidole.repositories.AccreditationRepository;
-import com.derteuffel.kidole.repositories.CompetitionRepository;
-import com.derteuffel.kidole.repositories.TeamRepository;
-import com.derteuffel.kidole.repositories.UserRepository;
+import com.derteuffel.kidole.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/kidole/accreditations")
@@ -33,6 +28,27 @@ public class AccreditationController {
 
     @Autowired
     private CompetitionRepository competitionRepository;
+
+    @Autowired
+    private ArbitreRepository arbitreRepository;
+
+    @Autowired
+    private ComiteRepository comiteRepository;
+
+    @Autowired
+    private AthleteRepository athleteRepository;
+
+    @Autowired
+    private DignitaireRepository dignitaireRepository;
+
+    @Autowired
+    private OfficielRepository officielRepository;
+
+    @Autowired
+    private SparingRepository sparingRepository;
+
+    @Autowired
+    private EntraineurRepository entraineurRepository;
 
 
 
@@ -92,22 +108,107 @@ public class AccreditationController {
         }
     }
 
-    @PostMapping("/{userId}/{teamId}/{competitionId}")
-    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation,@PathVariable Long userId, @PathVariable Long teamId, @PathVariable Long competitionId) {
+    @PostMapping("/{teamId}/{competitionId}")
+    public ResponseEntity<Accreditation>  save(@RequestBody Accreditation accreditation, @PathVariable Long teamId, @PathVariable Long competitionId) {
 
-        User user = userRepository.getOne(userId);
+        Optional<User> user = userRepository.findByFirstnameOrLastname(accreditation.getName(),accreditation.getName());
         Team team = teamRepository.getOne(teamId);
         Competition competition = competitionRepository.getOne(competitionId);
         accreditation.setCompetition(competition);
-        accreditation.setUser(user);
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd hh:mm");
         accreditation.setDate(dateFormat.format(date));
-        team.getUsers().add(user);
-        teamRepository.save(team);
-        user.getTeamIds().add(team.getId());
-        user.getCompetIds().add(competition.getId());
-        userRepository.save(user);
+        if (user.isPresent()){
+            accreditation.setUser(user.get());
+            team.getUsers().add(user.get());
+            teamRepository.save(team);
+            user.get().getTeamIds().add(team.getId());
+            user.get().getCompetIds().add(competition.getId());
+            userRepository.save(user.get());
+        }else {
+
+            if (accreditation.getType().contentEquals(EAccreditation.ARBITRE.toString())){
+                Arbitre arbitre = new Arbitre();
+                arbitre.setFirstname(accreditation.getName());
+                arbitre.setLastname(accreditation.getName());
+                arbitreRepository.save(arbitre);
+                accreditation.setUser(arbitre);
+                team.getUsers().add(arbitre);
+                teamRepository.save(team);
+                arbitre.getTeamIds().add(team.getId());
+                arbitre.getCompetIds().add(competition.getId());
+                arbitreRepository.save(arbitre);
+            }else if (accreditation.getType().contentEquals(EAccreditation.ATHLETE.toString())){
+                Athlete athlete = new Athlete();
+                athlete.setFirstname(accreditation.getName());
+                athlete.setLastname(accreditation.getName());
+                athleteRepository.save(athlete);
+                accreditation.setUser(athlete);
+                team.getUsers().add(athlete);
+                teamRepository.save(team);
+                athlete.getTeamIds().add(team.getId());
+                athlete.getCompetIds().add(competition.getId());
+                athleteRepository.save(athlete);
+            }else if (accreditation.getType().contentEquals(EAccreditation.COMITE.toString())){
+                Comite comite = new Comite();
+                comite.setFirstname(accreditation.getName());
+                comite.setLastname(accreditation.getName());
+                comiteRepository.save(comite);
+                accreditation.setUser(comite);
+                team.getUsers().add(comite);
+                teamRepository.save(team);
+                comite.getTeamIds().add(team.getId());
+                comite.getCompetIds().add(competition.getId());
+                comiteRepository.save(comite);
+            }else if (accreditation.getType().contentEquals(EAccreditation.ENTRAINEUR.toString())){
+                Entraineur entraineur = new Entraineur();
+                entraineur.setFirstname(accreditation.getName());
+                entraineur.setLastname(accreditation.getName());
+                entraineurRepository.save(entraineur);
+                accreditation.setUser(entraineur);
+                team.getUsers().add(entraineur);
+                teamRepository.save(team);
+                entraineur.getTeamIds().add(team.getId());
+                entraineur.getCompetIds().add(competition.getId());
+                entraineurRepository.save(entraineur);
+            }else if (accreditation.getType().contentEquals(EAccreditation.DIGNITAIRE.toString())){
+                Dignitaire dignitaire = new Dignitaire();
+                dignitaire.setFirstname(accreditation.getName());
+                dignitaire.setLastname(accreditation.getName());
+                dignitaireRepository.save(dignitaire);
+                accreditation.setUser(dignitaire);
+                team.getUsers().add(dignitaire);
+                teamRepository.save(team);
+                dignitaire.getTeamIds().add(team.getId());
+                dignitaire.getCompetIds().add(competition.getId());
+                dignitaireRepository.save(dignitaire);
+            }else if (accreditation.getType().contentEquals(EAccreditation.OFFICIEL.toString())){
+                Officiciel officiciel = new Officiciel();
+                officiciel.setFirstname(accreditation.getName());
+                officiciel.setLastname(accreditation.getName());
+                officielRepository.save(officiciel);
+                accreditation.setUser(officiciel);
+                team.getUsers().add(officiciel);
+                teamRepository.save(team);
+                officiciel.getTeamIds().add(team.getId());
+                officiciel.getCompetIds().add(competition.getId());
+                officielRepository.save(officiciel);
+            }else {
+                Sparing sparing = new Sparing();
+                sparing.setFirstname(accreditation.getName());
+                sparing.setLastname(accreditation.getName());
+                sparingRepository.save(sparing);
+                accreditation.setUser(sparing);
+                team.getUsers().add(sparing);
+                teamRepository.save(team);
+                sparing.getTeamIds().add(team.getId());
+                sparing.getCompetIds().add(competition.getId());
+                sparingRepository.save(sparing);
+            }
+
+        }
+
+
 
         accreditation.setStatus(ECompetition.ATTENTE.toString());
         try {

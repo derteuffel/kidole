@@ -19,6 +19,8 @@ public class Accreditation implements Serializable {
     private String status;
     private String date;
     private String description;
+    private Boolean retenus;
+    private String type;
 
     @ManyToOne
     @JsonIgnore
