@@ -14,5 +14,5 @@ public interface DisciplineRepository extends JpaRepository<Discipline,Long> {
     List<Discipline> findAllByName(String name);
     List<Discipline> findAllByType(String type);
     List<Discipline> findAllByCompetition_Id(Long id);
-    Optional<Discipline> findByCompetition_Id(Long id);
+    Optional<Discipline> findByNameAndCompetition_Id(String name, Long id);
 }

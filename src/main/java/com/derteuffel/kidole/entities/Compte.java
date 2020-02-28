@@ -1,11 +1,14 @@
 package com.derteuffel.kidole.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Data @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "compte")
 public class Compte implements Serializable {

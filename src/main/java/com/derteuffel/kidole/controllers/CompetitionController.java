@@ -132,12 +132,14 @@ public class CompetitionController {
 
         Optional<Competition> competition = competitionRepository.findById(id);
         if (competition.isPresent()){
-            if (competition.get().getDateDebut().equals(new Date()) && competition.get().getDateFin().after(new Date())){
-                competition.get().setStatus(ECompetition.ENCOURS.toString());
-            }else if (competition.get().getDateFin().before(new Date())){
-                competition.get().setStatus(ECompetition.TERMINER.toString());
+            if (competition.get().getDateDebut() != null && competition.get().getDateFin() != null) {
+                if (competition.get().getDateDebut().equals(new Date()) && competition.get().getDateFin().after(new Date())) {
+                    competition.get().setStatus(ECompetition.ENCOURS.toString());
+                } else if (competition.get().getDateFin().before(new Date())) {
+                    competition.get().setStatus(ECompetition.TERMINER.toString());
+                }
+                competitionRepository.save(competition.get());
             }
-            competitionRepository.save(competition.get());
             return new ResponseEntity<>(competition.get(), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -85,7 +85,7 @@ public class DisciplineController {
     public ResponseEntity<Discipline>  save(@RequestBody Discipline discipline, @PathVariable Long id) {
 
         Competition competition = competitionRepository.getOne(id);
-        Optional<Discipline> disciplineOptional = disciplineRepository.findByCompetition_Id(competition.getId());
+        Optional<Discipline> disciplineOptional = disciplineRepository.findByNameAndCompetition_Id(discipline.getName(),competition.getId());
 
         if (disciplineOptional.isPresent()){
 
