@@ -1,6 +1,7 @@
 package com.derteuffel.kidole.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class Site implements Serializable {
     private Set<Poule> poules;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("sites")
     private Competition competition;
 
     @OneToMany(mappedBy = "site")

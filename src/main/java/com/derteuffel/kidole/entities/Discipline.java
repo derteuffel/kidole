@@ -1,6 +1,7 @@
 package com.derteuffel.kidole.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Discipline implements Serializable {
     private int nbreEquipe;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("disciplines")
     private Competition competition;
 
     @OneToMany(mappedBy = "discipline")
