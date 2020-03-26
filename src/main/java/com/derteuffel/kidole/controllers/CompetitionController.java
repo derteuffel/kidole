@@ -3,6 +3,7 @@ package com.derteuffel.kidole.controllers;
 import com.derteuffel.kidole.entities.*;
 import com.derteuffel.kidole.repositories.AccreditationRepository;
 import com.derteuffel.kidole.repositories.CompetitionRepository;
+import com.derteuffel.kidole.repositories.DisciplineRepository;
 import com.derteuffel.kidole.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class CompetitionController {
 
     @Autowired
     private AccreditationRepository accreditationRepository;
+
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
      //
     // ----- Competition methods -------//
@@ -118,9 +122,17 @@ public class CompetitionController {
         DateFormat year = new SimpleDateFormat("yyyyMM");
         competition.setStatus(ECompetition.ATTENTE.toString());
         competition.setCode("#C"+competitionRepository.findAll().size()+year.format(new Date()));
-        System.out.println(competition.getCode());
+        System.out.println(competition.getItems());
         try {
             Competition _competition = competitionRepository.save(competition);
+            for (int i=0;i< competition.getItems().size();i++){
+                Discipline discipline = new Discipline();
+                discipline.setName(competition.getItems().get(i));
+                discipline.setCompetition(_competition);
+                System.out.println("i want to save "+ discipline);
+                disciplineRepository.save(discipline);
+
+            }
             return new ResponseEntity<>(_competition, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>((Competition) null, HttpStatus.EXPECTATION_FAILED);

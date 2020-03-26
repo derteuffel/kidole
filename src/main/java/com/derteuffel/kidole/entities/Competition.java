@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +28,12 @@ public class Competition implements Serializable {
     private String code;
     private String name;
     private Date dateDebut;
-    private int nbrePoule;
     private Date dateFin;
     private Date debutAccreditation;
     private Date finAccreditation;
     private String status;
-    private String categorie;
+    private String type;
+    private ArrayList<String> items =new ArrayList<>();
 
     @OneToMany(mappedBy = "competition")
     @OnDelete(action= OnDeleteAction.NO_ACTION)
