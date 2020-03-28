@@ -27,6 +27,7 @@ public class Competition implements Serializable {
     private Date dateFin;
     private Date debutAccreditation;
     private Date finAccreditation;
+    private String category;
     private String status;
     private String type;
     private ArrayList<String> items =new ArrayList<>();
