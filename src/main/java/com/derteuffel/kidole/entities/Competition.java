@@ -33,6 +33,7 @@ public class Competition implements Serializable {
     private Date finAccreditation;
     private String status;
     private String type;
+    private String categorie;
     private ArrayList<String> items =new ArrayList<>();
 
     @OneToMany(mappedBy = "competition")
