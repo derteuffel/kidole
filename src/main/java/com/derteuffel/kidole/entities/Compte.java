@@ -1,17 +1,23 @@
 package com.derteuffel.kidole.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Generated;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Set;
 
-@Data @AllArgsConstructor
-@NoArgsConstructor
+/**
+ * Created by user on 22/03/2020.
+ */
+@Data
 @Entity
 @Table(name = "compte")
-public class Compte implements Serializable {
+@OnDelete(action= OnDeleteAction.NO_ACTION)
+public class Compte implements Serializable{
 
     @Id
     @GeneratedValue
@@ -19,9 +25,17 @@ public class Compte implements Serializable {
 
     private String username;
     private String password;
-    private Boolean active;
     private String email;
+    private String avatar;
 
-    @OneToOne
-    private User user;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "comptes_roles",
+            joinColumns = @JoinColumn(
+                    name = "compte_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+
+
 }
