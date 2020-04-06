@@ -37,5 +37,17 @@ public class Compte implements Serializable{
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
+    @OneToOne
+    private User user;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "compte_competition",
+            joinColumns = @JoinColumn(
+                    name = "compte_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "competition_id", referencedColumnName = "id"))
+    private Collection<Competition> competitions;
+
 
 }

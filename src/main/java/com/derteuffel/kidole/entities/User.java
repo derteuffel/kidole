@@ -30,8 +30,7 @@ public class User implements Serializable {
     private String ville;
     private ArrayList<Long> teamIds = new ArrayList<>();
     private ArrayList<Long> competIds = new ArrayList<>();
-    @OneToOne(mappedBy = "user")
-    private Compte compte;
+
 
 
 

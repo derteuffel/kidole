@@ -10,6 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface CompteService extends UserDetailsService{
 
     Compte findByUsername(String username);
-    Compte save(CompteRegistrationDto compteRegistrationDto, String s, Long id);
+    Compte save(CompteRegistrationDto compteRegistrationDto, String s);
 
 }

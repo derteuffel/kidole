@@ -6,9 +6,5 @@ package com.derteuffel.kidole.enums;
 public enum ERole {
 
     ROLE_ROOT,
-    ROLE_PARENT,
-    ROLE_DIRECTEUR,
-    ROLE_ENSEIGNANT,
-    ROLE_ADMIN,
-    ROLE_ENCADREUR
+    ROLE_COORDINATOR
 }

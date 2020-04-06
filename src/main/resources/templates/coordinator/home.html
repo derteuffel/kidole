@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Dashboard</title>
+
+    <!-- Fontfaces CSS-->
+    <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link th:href="@{/vendor/bootstrap-4.1/bootstrap.min.css}" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link th:href="@{/vendor/animsition/animsition.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/wow/animate.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/css-hamburgers/hamburgers.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/slick/slick.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/select2/select2.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header th:replace="~{../templates/fragments/mobile-header :: mobile-header}" >
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside th:replace="~{../templates/fragments/sidebar :: sidebar}" >
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header th:replace="~{../templates/fragments/header :: header}" >
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="alert alert-info text-center">
+                        <h3>Ensemble de competitions</h3>
+                    </div>
+                    <div class="container-fluid row" th:each="competition:${lists}">
+
+                        <div class="col-md-6">
+                            <a th:href="@{/coordinator/kidole/competition/detail/}+${competition.id}">
+                            <div class="card border border-primary">
+                                <div class="card-header">
+                                    <strong class="card-title" > <span th:text="${competition.name}"></span> <small th:text="${competition.code}"></small> </strong>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text"><strong>Categorie :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.category}"></span>
+                                    </p>
+                                    <p class="card-text"><strong>Debut :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.dateDebut}"></span>
+                                    </p>
+                                    <p class="card-text"><strong>Fin :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.dateFin}"></span>
+                                    </p>
+                                    <p class="card-text"><strong>Debut accreditation:</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.debutAccreditation}"></span>
+                                    </p>
+                                    <p class="card-text"><strong>Fin accreditation:</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.finAccreditation}"></span>
+                                    </p>
+
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-1" data-toggle="modal" style="bottom: 50px;right: 30px;position: fixed" data-target="#addModal">
+                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Nouvelle competition
+                    </button>
+                    <div th:replace="~{../templates/fragments/footer :: footer}">
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- modal medium -->
+            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Formulaire competition</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/coordinator/kidole/competition/save}" method="post"  th:object="${competition}" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input-name" class=" form-control-label">Titre</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-input-name" th:field="*{name}" placeholder="Text" class="form-control">
+                                        <small class="form-text text-muted">Le nom de votre competition qui sera vu par tout le monde</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input-debutC" class=" form-control-label">Date de debut</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="date" id="text-input-debutC" th:field="*{dateDebut}" placeholder="Text" class="form-control">
+                                        <small class="form-text text-muted">La date de debut de votre competition</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input-finC" class=" form-control-label">Date de fin</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="date" id="text-input-finC" th:field="*{dateFin}" placeholder="Text" class="form-control">
+                                        <small class="form-text text-muted">La date de fin de votre competition</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input-debutC" class=" form-control-label">Date de debut accreditation</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="date" id="text-input-debutA" th:field="*{debutAccreditation}" placeholder="Text" class="form-control">
+                                        <small class="form-text text-muted">La date de debut des accreditations</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input-finA" class=" form-control-label">Date de fin accreditation</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="date" id="text-input-finA" th:field="*{finAccreditation}" placeholder="Text" class="form-control">
+                                        <small class="form-text text-muted">La date de fin des accreditations</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="select" class=" form-control-label">Type</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select th:field="*{type}" id="select" class="form-control">
+                                            <option value="">Choisir</option>
+                                            <option value="MONO_DISCIPLINE">MONO_DISCIPLINE</option>
+                                            <option value="PLURI_DISCIPLINE">PLURI_DISCIPLINE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="select" class=" form-control-label">Categorie</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select th:field="*{category}"  class="form-control">
+                                            <option value="">Choisir</option>
+                                            <option value="CADET">CADET</option>
+                                            <option value="JUNIOR">JUNIOR</option>
+                                            <option value="SENIOR">SENIOR</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="multiple-select" class=" form-control-label">Disciplines</label>
+                                    </div>
+                                    <div class="col col-md-9">
+                                        <select th:field="*{items}" id="multiple-select" multiple class="form-control">
+                                            <option value="">Choisir</option>
+                                            <option th:each="item : ${T(com.derteuffel.kidole.enums.EDiscipline).values()}" th:value="${item}" th:text="${item}">Option #2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal medium -->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Bootstrap JS-->
+    <script th:src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
+    <!-- Vendor JS       -->
+    <script th:src="@{/vendor/slick/slick.min.js}">
+    </script>
+    <script th:src="@{/vendor/wow/wow.min.js}"></script>
+    <script th:src="@{/vendor/animsition/animsition.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
+    </script>
+    <script th:src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/vendor/counter-up/jquery.counterup.min.js}">
+    </script>
+    <script th:src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
+    <script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
+    <script th:src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
+    <script th:src="@{/vendor/select2/select2.min.js}">
+    </script>
+
+    <!-- Main JS-->
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>
+<!-- end document-->

@@ -31,18 +31,18 @@ public class CoordinatorSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/coordinator/**").access("hasAnyRole('ROLE_ROOT','ROLE_COORDINATOR')")
                 .and()
                 .formLogin()
-                .loginPage("/coordinator/login")
-                .loginProcessingUrl("/coordinator/login/process")
-                .defaultSuccessUrl("/coordinator/home")
+                .loginPage("/coordinator/kidole/login")
+                .loginProcessingUrl("/coordinator/kidole/login/process")
+                .defaultSuccessUrl("/coordinator/kidole/home")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/coordinator/logout"))
-                .logoutSuccessUrl("/coordinator/login?logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/coordinator/kidole/logout"))
+                .logoutSuccessUrl("/coordinator/kidole/login?logout")
                 .and()
-                .exceptionHandling().accessDeniedPage("/coordinator/access-denied");
+                .exceptionHandling().accessDeniedPage("/coordinator/kidole/access-denied");
     }
 
     @Autowired
@@ -62,10 +62,11 @@ public class CoordinatorSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/js/**",
                         "/css/**",
-                        "/img/**",
-                        "/vendor/**",
-                        "/fonts/**",
                         "/images/**",
+                        "/vendor/**",
+                        "/downloadFile/**",
+                        "/fonts**",
+                        "/coordinator/kidole/registration",
                         "/static/**"
                         );
     }

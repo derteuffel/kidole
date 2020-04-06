@@ -42,7 +42,7 @@ public class CompteSeviceImpl implements CompteService{
     }
 
     @Override
-    public Compte save(CompteRegistrationDto compteRegistrationDto, String s, Long id) {
+    public Compte save(CompteRegistrationDto compteRegistrationDto, String s) {
         Compte compte = new Compte();
 
         compte.setEmail(compteRegistrationDto.getEmail());
@@ -55,7 +55,7 @@ public class CompteSeviceImpl implements CompteService{
         if (compteRepository.findAll().size() <=1){
             role.setName(ERole.ROLE_ROOT.toString());
         }else {
-            role.setName(ERole.ROLE_DIRECTEUR.toString());
+            role.setName(ERole.ROLE_COORDINATOR.toString());
         }
 
         Role existRole = roleRepository.findByName(role.getName());
