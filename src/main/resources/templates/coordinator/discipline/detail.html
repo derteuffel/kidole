@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Detail</title>
+
+    <!-- Fontfaces CSS-->
+    <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link th:href="@{/vendor/bootstrap-4.1/bootstrap.min.css}" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link th:href="@{/vendor/animsition/animsition.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/wow/animate.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/css-hamburgers/hamburgers.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/slick/slick.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/select2/select2.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header th:replace="~{../templates/fragments/mobile-header :: mobile-header}" >
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside th:replace="~{../templates/fragments/sidebar :: sidebar}" >
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header th:replace="~{../templates/fragments/header :: header}" >
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="alert alert-info text-center">
+                        <h3>Detail <span th:text="${discipline.name}"></span></h3>
+                    </div>
+                    <div class="container-fluid" >
+                        <div class="alert alert-danger outline-light">
+                            <p>Type de discipline : &nbsp; <span th:text="${discipline.type}"></span></p></br>
+                            <p>Nombre d'equipe(s) : &nbsp; <span th:text="${discipline.nbreEquipe}"></span></p></br>
+                        </div>
+                    </div>
+                    <div class=" my-2">
+                        <div th:if="${error}" class="alert alert-danger">
+                            <span th:text="${error}"></span>
+                        </div>
+                        <div th:if="${success}" class="alert alert-success">
+                            <span th:text="${success}"></span>
+                        </div>
+                        <div class="alert alert-warning">
+                            <h3><span>Equipes</span></h3>
+                            <button type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right" > Ajouter&nbsp;&nbsp; <i class="fa fa-plus"></i></button>
+                        </div>
+                        <div class="table-responsive table--no-card m-b-30">
+                            <table class="table table-borderless table-striped table-earning" style="overflow: scroll">
+                                <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Libelle</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="team : ${discipline.teams}">
+                                    <td th:text="${team.name}"></td>
+                                    <td th:text="${team.libelle}"></td>
+                                    <td class="text-right">
+                                        <a th:href="@{/coordinator/kidole/team/detail/}+${team.id}" class="btn text-succes"> <i class="fa fa-eye"></i></a>
+                                        <a th:href="@{/coordinator/kidole/team/update/}+${team.id}" class="btn text-primary"> <i class="fa fa-edit"></i></a>
+                                        <button type="button" data-toggle="modal"  data-target="#deleteModal" class="btn text-danger" th:attr="data-target='#deleteModal'+${discipline.id}" ><i class="fa fa-trash"></i></button>
+                                        <!-- modal medium -->
+                                        <div class="modal fade" th:id="deleteModal+${team.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel">Suppression d'une equipe </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Etes vous sure de vouloir supprimer cette element???</p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                        <a th:href="@{/coordinator/kidole/team/delete/}+${team.id}" class="btn btn-primary">Oui</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end modal medium -->
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div th:replace="~{../templates/fragments/footer :: footer}">
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- modal medium -->
+            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Ajouter une equipe </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Formulaire d'ajout d'une nouvelle equipe</p>
+
+                            <form th:action="@{/coordinator/kidole/teams/save/}+${discipline.id}" method="post"  th:object="${team}" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Nom de l'equipe</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{name}" placeholder="Nom de l'equipe">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Libelle</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{libelle}" placeholder="Libelle">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal medium -->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Bootstrap JS-->
+    <script th:src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
+    <!-- Vendor JS       -->
+    <script th:src="@{/vendor/slick/slick.min.js}">
+    </script>
+    <script th:src="@{/vendor/wow/wow.min.js}"></script>
+    <script th:src="@{/vendor/animsition/animsition.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
+    </script>
+    <script th:src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/vendor/counter-up/jquery.counterup.min.js}">
+    </script>
+    <script th:src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
+    <script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
+    <script th:src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
+    <script th:src="@{/vendor/select2/select2.min.js}">
+    </script>
+
+    <!-- Main JS-->
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>
+<!-- end document-->

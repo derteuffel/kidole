@@ -1,14 +1,8 @@
 package com.derteuffel.kidole.thymeleaf;
 
-import com.derteuffel.kidole.entities.Competition;
-import com.derteuffel.kidole.entities.Compte;
-import com.derteuffel.kidole.entities.Discipline;
-import com.derteuffel.kidole.entities.ECompetition;
+import com.derteuffel.kidole.entities.*;
 import com.derteuffel.kidole.helpers.CompteRegistrationDto;
-import com.derteuffel.kidole.repositories.AccreditationRepository;
-import com.derteuffel.kidole.repositories.CompetitionRepository;
-import com.derteuffel.kidole.repositories.CompteRepository;
-import com.derteuffel.kidole.repositories.DisciplineRepository;
+import com.derteuffel.kidole.repositories.*;
 import com.derteuffel.kidole.services.CompteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by user on 04/04/2020.
@@ -145,5 +140,75 @@ public class ThOrganisateurController {
         }
 
         return "redirect:/coordinator/kidole/home";
+    }
+
+    @GetMapping("/competition/detail/{id}")
+    public String getCompetition(@PathVariable Long id, Model model){
+        Competition competition = competitionRepository.getOne(id);
+        model.addAttribute("competition",competition);
+        model.addAttribute("discipline", new Discipline());
+        return "coordinator/competition/detail";
+    }
+
+
+    @GetMapping("/discipline/update/{id}")
+    public String updateDiscipline(@PathVariable Long id, Model model){
+        Discipline discipline = disciplineRepository.getOne(id);
+        model.addAttribute("discipline",discipline);
+        return "coordinator/discipline/edit";
+    }
+
+    @PostMapping("/disciplines/save/{id}")
+    public String disciplineSave(@Valid Discipline discipline, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        Competition competition = competitionRepository.getOne(id);
+        Optional<Discipline> disciplineOptional = disciplineRepository.findByNameAndCompetition_Id(discipline.getName(),competition.getId());
+        if (disciplineOptional.isPresent()){
+            redirectAttributes.addFlashAttribute("error", "Cette discipline est deja enregistrer pour cette competition");
+            return "redirect:/coordinator/kidole/competition/detail/"+competition.getId();
+        }else {
+            discipline.setName(discipline.getName().toString());
+            discipline.setCompetition(competition);
+            disciplineRepository.save(discipline);
+            redirectAttributes.addFlashAttribute("success","Vous avez ajouter avec succes une discipline a cette competition");
+            return "redirect:/coordinator/kidole/competition/detail/"+competition.getId();
+        }
+
+
+    }
+    @PostMapping("/disciplines/update/{id}")
+    public String disciplineUpdate(@Valid Discipline discipline, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        Competition competition = competitionRepository.getOne(id);
+
+            discipline.setName(discipline.getName().toString());
+            discipline.setCompetition(competition);
+            disciplineRepository.save(discipline);
+            redirectAttributes.addFlashAttribute("success","Vous avez ajouter avec succes une discipline a cette competition");
+            return "redirect:/coordinator/kidole/competition/detail/"+competition.getId();
+
+
+    }
+
+    @GetMapping("/discipline/detail/{id}")
+    public String disciplineDetail(@PathVariable Long id, Model model){
+        Discipline discipline = disciplineRepository.getOne(id);
+        model.addAttribute("discipline",discipline);
+        model.addAttribute("team", new Team());
+        return "coordinator/discipline/detail";
+    }
+
+    @Autowired
+    private TeamRepository teamRepository;
+
+
+    @PostMapping("/teams/save/{id}")
+    public String teamSave(@Valid Team team, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        Discipline discipline = disciplineRepository.getOne(id);
+        team.setDiscipline(discipline);
+        teamRepository.save(team);
+        discipline.setNbreEquipe((discipline.getNbreEquipe()+1));
+        disciplineRepository.save(discipline);
+        redirectAttributes.addFlashAttribute("success","Vous avez ajouter avec succes une equipe a cette discipline");
+
+        return "redirect:/coordinator/kidole/discipline/detail/"+discipline.getId();
     }
 }
