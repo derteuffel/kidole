@@ -13,6 +13,7 @@
     <title>Accueil</title>
 
     <!-- Fontfaces CSS-->
+    <link th:href="@{/css/comp_list.css}" rel="stylesheet" media="all">
     <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
@@ -67,7 +68,7 @@
 
                         <div class="col-md-6" th:each="competition:${lists}">
                             <a th:href="@{/coordinator/kidole/competition/detail/}+${competition.id}">
-                            <div class="card border border-primary">
+                            <div class="card border">
                                 <div class="card-header">
                                     <strong class="card-title" > <span th:text="${competition.name}"></span> <small th:text="${competition.code}"></small> </strong>
                                 </div>
@@ -88,7 +89,7 @@
                             </a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary mb-1" data-toggle="modal" style="bottom: 50px;right: 30px;position: fixed" data-target="#addModal">
+                    <button type="button" class="btn  mb-1 buton" data-toggle="modal" style="bottom: 50px;right: 30px;position: fixed" data-target="#addModal">
                         <i class="fas fa-plus"></i>&nbsp;&nbsp;Nouvelle competition
                     </button>
                     <div th:replace="~{../templates/fragments/footer :: footer}">

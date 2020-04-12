@@ -43,11 +43,11 @@
                 <div class="login-content" >
                     <div class="login-logo">
                         <a href="#">
-                            <img th:src="@{/images/director.png}" alt="CoolAdmin">
+                            <img th:src="@{/images/director.png}" alt="Kidole">
                         </a>
                     </div>
                     <div class="login-form">
-                        <form th:action="@{/coordinator/kidole/registration}" th:object="${compte}" method="post">
+                        <form th:action="@{/coordinator/kidole/registration}" th:object="${compte}" method="post" enctype="multipart/form-data">
 
                             <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
                                th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
