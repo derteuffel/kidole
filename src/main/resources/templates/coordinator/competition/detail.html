@@ -61,32 +61,32 @@
                         <h3>Detail <span th:text="${competition.name}"></span></h3>
                     </div>
                     <div class="container-fluid" >
-                        <div class="alert alert-danger outline-light">
-                            <p>Code de la competition : &nbsp; <span th:text="${competition.code}"></span></p></br>
-                            <p>Nom de la competition : &nbsp; <span th:text="${competition.name}"></span></p></br>
-                            <p>Categorie de la competition : &nbsp; <span th:text="${competition.category}"></span></p></br>
+                        <div class="alert alert-danger outline-light cards">
+                            <p class="texte">Code de la competition : &nbsp; <span th:text="${competition.code}"></span></p></br>
+                            <p class="texte">Nom de la competition : &nbsp; <span th:text="${competition.name}"></span></p></br>
+                            <p class="texte">Categorie de la competition : &nbsp; <span th:text="${competition.category}"></span></p></br>
                         </div>
                         <div class="row my-2">
-                            <div class="col-md-6">
-                                <div class="alert alert-primary py-4">
-                                <p>Date de debut de la competition : &nbsp; <span th:text="${competition.dateDebut}"></span></p>
+                            <div class="col-md-6 ">
+                                <div class="alert alert-primary py-4 cards_2">
+                                    <p class="texte">Date de debut de la competition : &nbsp; <span th:text="${competition.dateDebut}"></span></p>
+                                </div>
                             </div>
-                            </div>
                             <div class="col-md-6">
-                                <div class="alert alert-info py-4">
-                                    <p>Date de fin de la competition : &nbsp; <span th:text="${competition.dateFin}"></span></p>
+                                <div class="alert alert-info py-4 cards_3">
+                                    <p class="texte">Date de fin de la competition : &nbsp; <span th:text="${competition.dateFin}"></span></p>
                                 </div>
                             </div>
                         </div>
                         <div class="row my-2">
                             <div class="col-md-6">
-                                <div class="alert alert-warning py-4">
-                                    <p>Date de debut accreditation : &nbsp; <span th:text="${competition.debutAccreditation}"></span></p>
+                                <div class="alert alert-warning py-4 cards_4">
+                                    <p class="texte">Date de debut accreditation : &nbsp; <span th:text="${competition.debutAccreditation}"></span></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="alert alert-success py-4">
-                                    <p>Date de fin accreditation : &nbsp; <span th:text="${competition.finAccreditation}"></span></p>
+                                <div class="alert alert-success py-4 cards_5">
+                                    <p class="texte">Date de fin accreditation : &nbsp; <span th:text="${competition.finAccreditation}"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="alert alert-warning">
                             <h3><span>Disciplines</span></h3>
-                            <button type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right" > Ajouter&nbsp;&nbsp; <i class="fa fa-plus"></i></button>
+                            <button type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right buton" > Ajouter&nbsp;&nbsp; <i class="fa fa-plus"></i></button>
                         </div>
                         <div class="table-responsive table--no-card m-b-30">
                             <table class="table table-borderless table-striped table-earning" style="overflow: scroll">

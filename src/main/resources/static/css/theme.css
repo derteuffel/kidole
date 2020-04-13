@@ -1634,12 +1634,14 @@ section {
 }
 
 .navbar-sidebar .navbar__list li a:hover {
-    color: #4272d7;
+    color: #D8E184;
 }
 
 .navbar-sidebar .navbar__list li.active > a {
-    color: #4272d7;
+    color: #D8E184;
 }
+
+
 
 .has-sub {
     position: relative;
@@ -14665,4 +14667,39 @@ section {
 
 .buton {
     background: #b0ca31 !important;
+}
+
+.red-buton{
+    background: #DF1348 !important;
+}
+
+.cards{
+   border-radius: 5px;
+   border: 5px solid #fbfcff;
+   background: #DF1348;
+}
+
+.cards_2{
+   border-radius: 5px;
+   border: 5px solid #fbfcff;
+   background: #288DD1;
+}
+.cards_3{
+   border-radius: 5px;
+   border: 5px solid #fbfcff;
+   background: #A42380;
+}
+.cards_4{
+   border-radius: 5px;
+   border: 5px solid #fbfcff;
+   background: #E57A12;
+}
+.cards_5{
+   border-radius: 5px;
+   border: 5px solid #fbfcff;
+   background: #4CD488;
+}
+
+.texte{
+    color: #b0cf2f;
 }
