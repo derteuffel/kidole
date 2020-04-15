@@ -14703,3 +14703,16 @@ section {
 .texte{
     color: #b0cf2f;
 }
+
+.sidebar-link:hover {
+  text-decoration: none;
+  background: #f5f5f5;
+}
+
+.sidebar-link.active, .sidebar-link:focus {
+  background: #6C8B2E;
+  color: #DAE38A !important;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 10px;
+}

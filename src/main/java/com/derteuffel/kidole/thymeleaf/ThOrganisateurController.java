@@ -43,11 +43,13 @@ public class ThOrganisateurController {
     @Autowired
     private AccreditationRepository accreditationRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private CompetitionRepository competitionRepository;
+
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Autowired
     private ArbitreRepository arbitreRepository;
@@ -69,6 +71,11 @@ public class ThOrganisateurController {
 
     @Autowired
     private EntraineurRepository entraineurRepository;
+
+    @Autowired
+    private UserRepository  userRepository;
+
+
 
     @Value("${file.upload-dir}")
     private  String fileStorage;
@@ -221,8 +228,6 @@ public class ThOrganisateurController {
         return "coordinator/discipline/detail";
     }
 
-    @Autowired
-    private TeamRepository teamRepository;
 
 
     @PostMapping("/teams/save/{id}")
@@ -250,6 +255,7 @@ public class ThOrganisateurController {
         model.addAttribute("teams",teams);
         model.addAttribute("accreditationHelper",new AccreditationHelper());
         model.addAttribute("lists",accreditations);
+        model.addAttribute("home","MES ACCREDITATIONS");
         model.addAttribute("competition",competition);
         return "coordinator/accreditation/lists";
     }
@@ -443,4 +449,29 @@ public class ThOrganisateurController {
         model.addAttribute("accreditation",accreditation);
         return "coordinator/accreditation/update";
     }
+
+    /* Accreditation */
+
+
+
+    @GetMapping("/accreditation/detail/{id}")
+    public String findAccreditationById(@PathVariable Long id, Model model){
+        Accreditation accreditation = accreditationRepository.getOne(id);
+        model.addAttribute("accreditation",accreditation);
+        return "coordinator/accreditation/detail";
+    }
+
+
+    @GetMapping("/accreditation/delete/{id}")
+    public String deleteAccreditation(@PathVariable Long id, Model model){
+
+        Accreditation accreditation = accreditationRepository.findById(id)
+                .orElseThrow(() ->new IllegalArgumentException("invalid accreditation id:" +id));
+        accreditationRepository.deleteById(id);
+        model.addAttribute("accreditation", accreditationRepository.findAll());
+
+        return "redirect:/accreditation/all";
+
+    }
+
 }
