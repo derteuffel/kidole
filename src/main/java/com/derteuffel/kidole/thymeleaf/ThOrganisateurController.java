@@ -234,6 +234,7 @@ public class ThOrganisateurController {
     public String teamSave(@Valid Team team, @PathVariable Long id, RedirectAttributes redirectAttributes){
         Discipline discipline = disciplineRepository.getOne(id);
         team.setDiscipline(discipline);
+        team.setName(team.getName().toUpperCase()+" ("+discipline.getName().toUpperCase()+")");
         teamRepository.save(team);
         discipline.setNbreEquipe((discipline.getNbreEquipe()+1));
         disciplineRepository.save(discipline);
