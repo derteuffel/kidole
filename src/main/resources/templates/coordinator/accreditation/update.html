@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Edit</title>
+    <title>Accreditations</title>
 
     <!-- Fontfaces CSS-->
     <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
@@ -58,52 +58,62 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="alert alert-info text-center">
-                        <h3>Detail <span th:text="${discipline.name}"></span></h3>
-                    </div>
-                    <div class="container-fluid" >
-                        <div class="alert alert-danger outline-light">
-                            <p>Type de discipline : &nbsp; <span th:text="${discipline.type}"></span></p></br>
-                            <p>Nombre d'equipe(s) : &nbsp; <span th:text="${discipline.nbreEquipe}"></span></p></br>
-                        </div>
+                        <h3>Mises a jour de l'accreditation de : <span th:text="${accreditation.name}"></span></h3>
                     </div>
                     <div class=" my-2">
-                        <form th:action="@{/coordinator/kidole/disciplines/update/}+${discipline.competition.id}" method="post"  th:object="${discipline}" class="form-horizontal">
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="select" class=" form-control-label">Nom</label>
+                        <div th:if="${error}" class="alert alert-danger">
+                            <span th:text="${error}"></span>
+                        </div>
+                        <div th:if="${success}" class="alert alert-success">
+                            <span th:text="${success}"></span>
+                        </div>
+                        <div class="container-fluid">
+                            <form th:action="@{/coordinator/kidole/accreditation/save/}+${accreditation.competition.id}" method="post"  th:object="${accreditation}" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Nom</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{name}" placeholder="Nom">
+                                        <input type="hidden" class="form-control" th:field="*{id}" placeholder="Nom">
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-9">
-                                    <select th:field="*{name}" id="select" class="form-control">
-                                        <option th:each="name : ${T(com.derteuffel.kidole.enums.EDiscipline).values()}" th:value="${name}" th:text="${name}">Choisir</option>
-                                    </select>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Description</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <textarea th:field="*{description}"   rows="5" placeholder="Entree une description pour cette nouvelle accreditation" class="form-control"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="select" class=" form-control-label">Nombre d'equipe</label>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Type d'athlete</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select th:field="*{type}"  class="form-control">
+                                            <option value="">Choisir</option>
+                                            <option th:each="type : ${T(com.derteuffel.kidole.enums.ETypeAccreditation).values()}" th:value="${type}" th:text="${type}"></option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="number" class="form-control" th:field="*{nbreEquipe}" placeholder="Nombre d'equipe">
-                                    <input type="hidden" class="form-control" th:field="*{id}" placeholder="Nombre d'equipe">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Equipe  d'appartenance</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="teamId"  class="form-control">
+                                            <option value="">Choisir</option>
+                                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="select" class=" form-control-label">Type</label>
+                                <div class="form-group">
+                                    <a th:href="@{/coordinator/kidole/accreditations/}+${accreditation.competition.id}"  class="btn btn-secondary" >Retour</a>
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                                 </div>
-                                <div class="col-12 col-md-9">
-                                    <select th:field="*{type}"  class="form-control">
-                                        <option value="">Choisir</option>
-                                        <option value="INDIVIDUEL">INDIVIDUEL</option>
-                                        <option value="EQUIPE">EQUIPE</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <a th:href="@{/coordinator/kidole/discipline/detail/}+${discipline.id}" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</a>
-                                <button type="submit" class="btn btn-primary buton">Enregistrer</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
 
                     <div th:replace="~{../templates/fragments/footer :: footer}">
