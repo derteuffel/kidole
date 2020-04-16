@@ -75,6 +75,15 @@ public class ThOrganisateurController {
     @Autowired
     private UserRepository  userRepository;
 
+    @Autowired
+    private SiteRepository siteRepository;
+
+    @Autowired
+    private ConfrontationRepository confrontationRepository;
+
+    @Autowired
+    private PouleRepository pouleRepository;
+
 
 
     @Value("${file.upload-dir}")
@@ -474,5 +483,173 @@ public class ThOrganisateurController {
         return "redirect:/accreditation/all";
 
     }
+
+
+    /********** Team ************/
+
+
+
+    @PostMapping("/team/save/{id}")
+    public String saveTeam(Team team, @PathVariable Long id){
+
+        Discipline discipline = disciplineRepository.getOne(id);
+        Optional<Team> teamOptional = teamRepository.findByDiscipline_Id(discipline.getId());
+
+        if (teamOptional.isPresent()){
+
+            return "";
+        }else {
+            try {
+                team.setDiscipline(discipline);
+                teamRepository.save(team);
+                return "";
+            } catch (Exception e) {
+                return "";
+            }
+        }
+    }
+
+
+    @GetMapping("/team/{id}")
+    public String findTeamById(@PathVariable Long id){
+        Optional<Team> teamOptional = teamRepository.findById(id);
+        if (teamOptional.isPresent()){
+            return "";
+        }else {
+            return "";
+        }
+    }
+
+    @DeleteMapping("/team/delete/{id}")
+    public String deleteTeamById(@PathVariable Long id, Model model){
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() ->new IllegalArgumentException("invalid team id:" +id));
+        teamRepository.deleteById(id);
+        model.addAttribute("team", teamRepository.findAll());
+
+        return "redirect:/team/all";
+    }
+
+
+    @GetMapping("/team/{id}/{disciplineId}")
+    public String update(Team team, @PathVariable Long id, @PathVariable Long disciplineId){
+        Optional<Team> teamOptional = teamRepository.findById(id);
+
+        if (teamOptional.isPresent()){
+            Team team1 = teamOptional.get();
+            team1.setLibelle(team.getLibelle());
+            team1.setName(team.getName());
+            team1.setDiscipline(disciplineRepository.getOne(disciplineId));
+
+            return "";
+        } else {
+            return "";
+        }
+    }
+
+
+    @GetMapping("/users/{id}")
+    public String findAllUser(@PathVariable Long id){
+        List<User> users = new ArrayList<>();
+        try {
+            teamRepository.getOne(id).getUsers().forEach(users :: add);
+            if (users.isEmpty()){
+                return "";
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    @GetMapping("/discipline/{id}")
+    public String findAllByDiscipline(@PathVariable Long id){
+        List<Team> teams = new ArrayList<>();
+        try {
+            teamRepository.findAllByDiscipline_Id(id).forEach(teams :: add);
+            if (teams.isEmpty()){
+                return "";
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    @GetMapping("/confrontations/{id}")
+    public String findAllConfrontations(@PathVariable Long id){
+        List<Confrontation> confrontations = new ArrayList<>();
+        try {
+            Team team = teamRepository.getOne(id);
+            for (Long ids : team.getConfrontaionsIds()){
+                confrontations.add(confrontationRepository.getOne(ids));
+            }
+
+            if (confrontations.isEmpty()){
+                return "";
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+
+    /********** Poule ************/
+
+
+    public String savePoule(){
+
+        return "";
+    }
+
+    public String update(@RequestBody Poule poule, @PathVariable Long id){
+        Optional<Poule> pouleOptional = pouleRepository.findById(id);
+
+        if (pouleOptional.isPresent()){
+            pouleOptional.get().setLibelle(poule.getLibelle());
+            pouleOptional.get().setName(poule.getName());
+            pouleOptional.get().setSiteIds(pouleOptional.get().getSiteIds());
+
+            return "";
+        } else {
+            return "";
+        }
+    }
+
+
+    @GetMapping("/poule/sites/{id}")
+    public String findAllSites(@PathVariable Long id) {
+        List<Site> sites = new ArrayList<>();
+        Poule poule = pouleRepository.getOne(id);
+        try {
+            for (Long ids : poule.getSiteIds()){
+                sites.add(siteRepository.getOne(ids));
+            }
+            if (sites.isEmpty()){
+                return "";
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    @GetMapping("/poule/confrontations/{id}")
+    public String findAllPouleConfrontations(@PathVariable Long id) {
+        List<Confrontation> confrontations = new ArrayList<>();
+        try {
+            confrontationRepository.findAllByPoule_Id(id).forEach(confrontations :: add);
+            if (confrontations.isEmpty()){
+                return "";
+            }
+            return "";
+        } catch (Exception e) {
+            return"";
+        }
+    }
+
+
+
 
 }

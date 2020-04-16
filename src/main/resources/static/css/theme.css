@@ -14716,3 +14716,20 @@ section {
   border-radius: 10px;
   border: 10px;
 }
+
+.avatar {
+  width: 55px;
+  height: 55px;
+}
+
+/* .sidebar-header {
+  padding: 30px 15px;
+}*/
+
+.title {
+  margin-left: 10px;
+}
+
+.title h1 {
+  color: #333;
+}
