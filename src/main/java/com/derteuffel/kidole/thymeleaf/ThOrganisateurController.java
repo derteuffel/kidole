@@ -475,4 +475,38 @@ public class ThOrganisateurController {
 
     }
 
+    @GetMapping("/user/detail/{id}")
+    public String user(@PathVariable Long id, Model model){
+        Accreditation accreditation = accreditationRepository.getOne(id);
+        if (accreditation.getType().equals(EAccreditation.ARBITRE.toString())){
+            User user = arbitreRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/arbitre";
+        }else if (accreditation.getType().equals(EAccreditation.ATHLETE.toString())){
+            User user = athleteRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/athlete";
+        }else if (accreditation.getType().equals(EAccreditation.COMITE.toString())){
+            User user = comiteRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/comite";
+        }else if (accreditation.getType().equals(EAccreditation.DIGNITAIRE.toString())){
+            User user = dignitaireRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/dignitaire";
+        }else if (accreditation.getType().equals(EAccreditation.ENTRAINEUR.toString())){
+            User user = entraineurRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/entraineur";
+        }else if (accreditation.getType().equals(EAccreditation.OFFICIEL.toString())){
+            User user = officielRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/officiel";
+        }else {
+            User user = sparingRepository.getOne(accreditation.getUser().getId());
+            model.addAttribute("user",user);
+            return "coordinator/user/sparing";
+        }
+    }
+
 }

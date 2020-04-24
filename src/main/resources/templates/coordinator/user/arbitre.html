@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Accreditations</title>
+
+    <!-- Fontfaces CSS-->
+    <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link th:href="@{/vendor/bootstrap-4.1/bootstrap.min.css}" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link th:href="@{/vendor/animsition/animsition.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/wow/animate.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/css-hamburgers/hamburgers.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/slick/slick.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/select2/select2.min.css}" rel="stylesheet" media="all">
+    <link th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header th:replace="~{../templates/fragments/mobile-header :: mobile-header}" >
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside th:replace="~{../templates/fragments/sidebar :: sidebar}" >
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header th:replace="~{../templates/fragments/header :: header}" >
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="alert alert-info text-center">
+                        <h3>Profile de <span th:text="${user.lastname+' '+user.firstname}"></span></h3>
+                    </div>
+                    <div class="image">
+                        <img th:if="${user.photo}" th:src="${user.photo}" class="rounded-circle" style="width: 90px;height: 90px" alt="">
+                        <img th:unless="${user.photo}" th:src="@{/images/profile.jpeg}" class="rounded-circle" style="width: 90px;height: 90px" alt="">                    </div>
+                    <div class=" my-2">
+                        <div th:if="${error}" class="alert alert-danger">
+                            <span th:text="${error}"></span>
+                        </div>
+                        <div th:if="${success}" class="alert alert-success">
+                            <span th:text="${success}"></span>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row my-2">
+                                <div class="col-lg-12 ">
+                                    <div class="alert alert-warning py-4 ">
+                                        <table class="table table-borderless">
+                                            <tr class="texte">
+                                                <td >Nom</td>
+                                                <td th:text="${user.lastname}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Prenom</td>
+                                                <td th:text="${user.firstname}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Date naissance</td>
+                                                <td th:text="${user.birthday}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Lieu naissance</td>
+                                                <td th:text="${user.birthplace}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Adresse e-mail</td>
+                                                <td th:text="${user.email}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Numero de telephone</td>
+                                                <td th:text="${user.phone}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Pays</td>
+                                                <td th:text="${user.country}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Region</td>
+                                                <td th:text="${user.region}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Ville</td>
+                                                <td th:text="${user.ville}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Categorie</td>
+                                                <td th:text="${user.category}">Code de la competition</td>
+                                            </tr>
+                                            <tr class="texte">
+                                                <td >Discipline</td>
+                                                <td th:text="${user.discipline}">Code de la competition</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div th:replace="~{../templates/fragments/footer :: footer}">
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Bootstrap JS-->
+    <script th:src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
+    <!-- Vendor JS       -->
+    <script th:src="@{/vendor/slick/slick.min.js}">
+    </script>
+    <script th:src="@{/vendor/wow/wow.min.js}"></script>
+    <script th:src="@{/vendor/animsition/animsition.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
+    </script>
+    <script th:src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/vendor/counter-up/jquery.counterup.min.js}">
+    </script>
+    <script th:src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
+    <script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
+    <script th:src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
+    <script th:src="@{/vendor/select2/select2.min.js}">
+    </script>
+
+    <!-- Main JS-->
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>
+<!-- end document-->

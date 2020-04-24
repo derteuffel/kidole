@@ -62,9 +62,20 @@
                     </div>
                     <div class="container-fluid" >
                         <div class="alert alert-danger outline-light cards">
-                            <p class="texte">Code de la competition : &nbsp; <span th:text="${competition.code}"></span></p></br>
-                            <p class="texte">Nom de la competition : &nbsp; <span th:text="${competition.name}"></span></p></br>
-                            <p class="texte">Categorie de la competition : &nbsp; <span th:text="${competition.category}"></span></p></br>
+                            <table class="table table-borderless">
+                                <tr class="texte">
+                                    <td >Code de la competition</td>
+                                    <td th:text="${competition.code}">Code de la competition</td>
+                                </tr>
+                                <tr class="texte">
+                                    <td >Nom de la competition</td>
+                                    <td th:text="${competition.name}">Code de la competition</td>
+                                </tr>
+                                <tr class="texte">
+                                    <td >Categorie de la competition</td>
+                                    <td  th:text="${competition.category}">Code de la competition</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div class=" my-2">
@@ -102,6 +113,7 @@
                                     </td>
                                     <td th:text="${item.type}"></td>
                                     <td >
+                                        <a th:href="@{/coordinator/kidole/accreditation/detail/}+${item.id}" class="btn text-success"> <i class="fa fa-eye"></i></a>
                                         <a th:href="@{/coordinator/kidole/accreditation/update/}+${item.id}" class="btn text-primary"> <i class="fa fa-edit"></i></a>
                                         <button type="button" data-toggle="modal"  data-target="#deleteModal" class="btn text-danger" th:attr="data-target='#deleteModal'+${item.id}" ><i class="fa fa-trash"></i></button>
                                         <!-- modal medium -->

@@ -73,17 +73,28 @@
                                     <strong class="card-title" > <span th:text="${competition.name}"></span> <small th:text="${competition.code}"></small> </strong>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text"><strong>Categorie :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.category}"></span>
-                                    </p>
-                                    <p class="card-text"><strong>Debut :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.dateDebut}"></span>
-                                    </p>
-                                    <p class="card-text"><strong>Fin :</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.dateFin}"></span>
-                                    </p>
-                                    <p class="card-text"><strong>Debut accreditation:</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.debutAccreditation}"></span>
-                                    </p>
-                                    <p class="card-text"><strong>Fin accreditation:</strong>&nbsp;&nbsp;&nbsp;<span th:text="${competition.finAccreditation}"></span>
-                                    </p>
-
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td>Categorie</td>
+                                            <td th:text="${competition.category}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Debut de la competition</td>
+                                            <td th:text="${competition.dateDebut}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fin de la competition</td>
+                                            <td th:text="${competition.dateFin}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Debut de l'accreditatioin</td>
+                                            <td th:text="${competition.debutAccreditation}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fin de l'accreditation</td>
+                                            <td th:text="${competition.finAccreditation}"></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             </a>
