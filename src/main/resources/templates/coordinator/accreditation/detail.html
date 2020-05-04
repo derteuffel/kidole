@@ -32,6 +32,7 @@
 
     <!-- Main CSS-->
     <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
+    <link th:href="@{/css/accreditation.css}" rel="stylesheet" media="all">
 
 </head>
 
@@ -90,9 +91,12 @@
                                             </tr>
                                             <tr class="texte">
                                                 <td >Action</td>
-                                                <td  ><a th:href="@{/coordinator/kidole/user/detail/}+${accreditation.id}">Voir les details du concerne </a></td>
+                                                <td> <a  th:href="@{/coordinator/kidole/user/detail/}+${accreditation.id}"> <input type="button" class="profile-edit-btn" name="btnAddMore" value="Voir les details du concerne"/></a></td>
                                             </tr>
                                         </table>
+                                        <div class="col-md-2">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -110,6 +114,8 @@
 
 
     </div>
+
+
 
     <!-- Jquery JS-->
     <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
