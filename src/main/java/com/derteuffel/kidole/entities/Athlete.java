@@ -19,10 +19,10 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "id")
 public class Athlete extends User {
     private String equipeOrigin;
-    private Float height;
-    private Float weight;
+    private String height;
+    private String weight;
     private String manualite;
     private String category;
     private String discipline;
-
+    private String equipe;
 }

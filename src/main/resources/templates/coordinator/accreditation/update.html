@@ -103,7 +103,6 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <select name="teamId"  class="form-control">
-                                            <option value="">Choisir</option>
                                             <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
                                         </select>
                                     </div>

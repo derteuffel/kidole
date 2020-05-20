@@ -91,7 +91,9 @@
                                             </tr>
                                             <tr class="texte">
                                                 <td >Action</td>
-                                                <td> <a  th:href="@{/coordinator/kidole/user/detail/}+${accreditation.id}"> <input type="button" class="profile-edit-btn" name="btnAddMore" value="Voir les details du concerne"/></a></td>
+                                                <td> <a  th:href="@{/coordinator/kidole/user/detail/}+${accreditation.id}"> <input type="button" class="profile-edit-btn" name="btnAddMore" value="Plus de details..."/></a>
+                                                    <a  th:href="@{/coordinator/kidole/accreditation/fiche/}+${accreditation.id}"> <input type="button" class="profile-edit-btn" name="btnAddMore" value="Voir la fiche"/></a>
+                                                </td>
                                             </tr>
                                         </table>
                                         <div class="col-md-2">

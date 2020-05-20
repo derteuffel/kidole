@@ -11,6 +11,6 @@ public class ThHomeController {
 
     @GetMapping("/")
     public String home(){
-        return "index";
+        return "redirect:/coordinator/kidole/login";
     }
 }

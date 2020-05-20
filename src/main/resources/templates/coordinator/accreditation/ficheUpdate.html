@@ -32,7 +32,7 @@
 
     <!-- Main CSS-->
     <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
-    <link th:href="@{/css/datatables/datatables.min.css}" rel="stylesheet" media="all">
+
 </head>
 
 <body class="animsition">
@@ -58,25 +58,10 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="alert alert-info text-center">
-                        <h3><span th:text="${home}"></span></h3>
-                    </div>
-                    <div class="container-fluid" >
-                        <div class="alert alert-danger outline-light cards">
-                            <table class="table table-borderless">
-                                <tr class="texte">
-                                    <td >Code de la competition</td>
-                                    <td th:text="${competition.code}">Code de la competition</td>
-                                </tr>
-                                <tr class="texte">
-                                    <td >Nom de la competition</td>
-                                    <td th:text="${competition.name}">Code de la competition</td>
-                                </tr>
-                                <tr class="texte">
-                                    <td >Categorie de la competition</td>
-                                    <td  th:text="${competition.category}">Code de la competition</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <h3>Mises a jour de la fiche de : <span th:text="${fiche.lastname}"></span>
+                            </br>
+                        </h3>
+                        <strong>Discipline : <span th:text="${fiche.type}"></span></strong>
                     </div>
                     <div class=" my-2">
                         <div th:if="${error}" class="alert alert-danger">
@@ -85,97 +70,24 @@
                         <div th:if="${success}" class="alert alert-success">
                             <span th:text="${success}"></span>
                         </div>
-                        <div class="row px-3">
-                            <div class="alert alert-warning col-md-8">
-                                <h3><span>Tableau</span></h3>
-                            </div>
-                            <div class="button col-md-4">
-                                <a href="#" type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right buton" > Nouvelle Accreditation&nbsp;&nbsp; <i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive table--no-card m-b-30">
-                            <table class="table table-borderless table-striped" id="add-row">
-                                <thead class="badge-secondary">
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Decision</th>
-                                    <th>Type d'accreditation</th>
-                                    <th class="text-right">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="item : ${lists}">
-                                    <td th:text="${item.name}"></td>
-                                    <td th:text="${item.status}"></td>
-                                    <td th:text="${item.date}"></td>
-                                    <td th:text="${item.description}"></td>
-                                    <td><span th:if="${item.retenus}==true">Retenue</span>
-                                        <span th:unless="${item.retenus}==true">Rejeter</span>
-                                    </td>
-                                    <td th:text="${item.type}"></td>
-                                    <td >
-                                        <a th:href="@{/coordinator/kidole/accreditation/detail/}+${item.id}" class="btn text-success"> <i class="fa fa-eye"></i></a>
-                                        <a th:href="@{/coordinator/kidole/accreditation/update/}+${item.id}" class="btn text-primary"> <i class="fa fa-edit"></i></a>
-                                        <button type="button" data-toggle="modal"  data-target="#deleteModal" class="btn text-danger" th:attr="data-target='#deleteModal'+${item.id}" ><i class="fa fa-trash"></i></button>
-                                        <!-- modal medium -->
-                                        <div class="modal fade" th:id="deleteModal+${item.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel">Suppression d'une accreditation </h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Etes vous sure de vouloir supprimer cette element???</p>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
-                                                        <a th:href="@{/coordinator/kidole/accreditation/delete/}+${item.id}" class="btn btn-primary buton">Oui</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end modal medium -->
-                                    </td>
-
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div th:replace="~{../templates/fragments/footer :: footer}">
-                    </div>
-                </div>
-            </div>
-            <!-- END MAIN CONTENT-->
-            <!-- modal medium -->
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addModalLabel">Ajouter une Accreditation </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Formulaire d'ajout d'une nouvelle accreditation</p>
-
-                            <form th:action="@{/coordinator/kidole/accreditation/save/}+${competition.id}" method="post"  th:object="${accreditationHelper}" class="form-horizontal">
+                        <div class="container-fluid">
+                            <form th:action="@{/coordinator/kidole/accreditation/fiche/save/}+${fiche.accreditation.id}" method="post"  th:object="${fiche}" class="form-horizontal" enctype="multipart/form-data">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Photo</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" class="form-control-file" name="file" placeholder="Prenom">
+                                        <input type="text" class="form-control" th:field="*{photo}" placeholder="Prenom" style="display: none">
+                                    </div>
+                                </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
                                         <label  class=" form-control-label">Nom</label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" class="form-control" th:field="*{lastname}" placeholder="Nom">
+                                        <input type="hidden" class="form-control" th:field="*{id}" placeholder="Nom">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -188,10 +100,10 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label  class=" form-control-label">E-mail</label>
+                                        <label  class=" form-control-label">Email</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="email" class="form-control" th:field="*{email}" placeholder="Adresse e-mail">
+                                        <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -199,7 +111,7 @@
                                         <label  class=" form-control-label">Telephone</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{phone}" placeholder="Numero de telephone">
+                                        <input type="text" class="form-control" th:field="*{phone}" placeholder="Telephone">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -207,7 +119,7 @@
                                         <label  class=" form-control-label">Date de naissance</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{birthday}" placeholder="Naissance">
+                                        <input type="text" class="form-control" th:field="*{birthday}" placeholder="Date de naissance">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -220,10 +132,10 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label  class=" form-control-label">Nationalite</label>
+                                        <label  class=" form-control-label">Pays</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{country}" placeholder="Pays d'origine">
+                                        <input type="text" class="form-control" th:field="*{country}" placeholder="Pays">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -231,15 +143,73 @@
                                         <label  class=" form-control-label">Region</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{region}" placeholder="Region d'origine">
+                                        <input type="text" class="form-control" th:field="*{region}" placeholder="Region">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label  class=" form-control-label">Ville d'origine</label>
+                                        <label  class=" form-control-label">Ville</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{ville}" placeholder="Ville d'origine">
+                                        <input type="text" class="form-control" th:field="*{ville}" placeholder="Ville">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Equipe d'origine</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{equipeOrigin}" placeholder="Equipe d'origine">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Poids</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{weight}" placeholder="Poids">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Taille</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{height}" placeholder="Taille">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Manualite</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{manualite}" placeholder="Manualite">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="select" class=" form-control-label">Discipline</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select th:field="*{discipline}" id="select" class="form-control">
+                                            <option th:each="name : ${T(com.derteuffel.kidole.enums.EDiscipline).values()}" th:value="${name}" th:text="${name}">Choisir</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Fonction</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{fonction}" placeholder="Fonction">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label  class=" form-control-label">Titre</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control" th:field="*{titre}" placeholder="Titre">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -256,7 +226,6 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <select th:field="*{type}"  class="form-control">
-                                            <option value="">Choisir</option>
                                             <option th:each="type : ${T(com.derteuffel.kidole.enums.ETypeAccreditation).values()}" th:value="${type}" th:text="${type}"></option>
                                         </select>
                                     </div>
@@ -266,23 +235,24 @@
                                         <label  class=" form-control-label">Equipe  d'appartenance</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select name="teamId"  class="form-control">
-                                            <option value="">Choisir</option>
-                                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                                        <select th:field="*{equipe}"  class="form-control">
+                                            <option th:each="team : ${teams}" th:value="${team.name}" th:text="${team.name}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
+                                    <a th:href="@{/coordinator/kidole/accreditation/fiche/}+${fiche.accreditation.id}"  class="btn btn-secondary red-buton" >Retour</a>
                                     <button type="submit" class="btn btn-primary buton">Enregistrer</button>
                                 </div>
                             </form>
-
                         </div>
+                    </div>
+
+                    <div th:replace="~{../templates/fragments/footer :: footer}">
                     </div>
                 </div>
             </div>
-            <!-- end modal medium -->
+            <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
         </div>
 
@@ -312,15 +282,6 @@
 
     <!-- Main JS-->
     <script th:src="@{/js/main.js}"></script>
-    <script th:src="@{/js/datatables/datatables.min.js}"></script>
-    <script >
-        $(document).ready(function() {
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-        });
-    </script>
 
 </body>
 
