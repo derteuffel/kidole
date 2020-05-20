@@ -196,14 +196,6 @@ public class ThOrganisateurController {
         return "coordinator/competition/detail";
     }
 
-
-    @GetMapping("/discipline/update/{id}")
-    public String updateDiscipline(@PathVariable Long id, Model model){
-        Discipline discipline = disciplineRepository.getOne(id);
-        model.addAttribute("discipline",discipline);
-        return "coordinator/discipline/edit";
-    }
-
     @PostMapping("/disciplines/save/{id}")
     public String disciplineSave(@Valid Discipline discipline, @PathVariable Long id, RedirectAttributes redirectAttributes){
         Competition competition = competitionRepository.getOne(id);
@@ -222,16 +214,25 @@ public class ThOrganisateurController {
 
     }
     @PostMapping("/disciplines/update/{id}")
-    public String disciplineUpdate(@Valid Discipline discipline, @PathVariable Long id, RedirectAttributes redirectAttributes){
+    public String disciplineUpdate(@Valid Discipline discipline, @PathVariable Long id,
+                                   RedirectAttributes redirectAttributes){
         Competition competition = competitionRepository.getOne(id);
 
             discipline.setName(discipline.getName().toString());
             discipline.setCompetition(competition);
             disciplineRepository.save(discipline);
-            redirectAttributes.addFlashAttribute("success","Vous avez ajouter avec succes une discipline a cette competition");
+            redirectAttributes.addFlashAttribute("success",
+                    "Vous avez modifier avec succes une discipline a cette competition");
             return "redirect:/coordinator/kidole/competition/detail/"+competition.getId();
 
 
+    }
+
+    @GetMapping("/discipline/update/{id}")
+    public String updateDiscipline(@PathVariable Long id, Model model){
+        Discipline discipline = disciplineRepository.getOne(id);
+        model.addAttribute("discipline",discipline);
+        return "coordinator/discipline/edit";
     }
 
     @GetMapping("/discipline/detail/{id}")
@@ -784,63 +785,45 @@ public class ThOrganisateurController {
     /********** Team ************/
 
 
+    @GetMapping("/team/detail/{id}")
+    public String findTeamById(@PathVariable Long id, Model model){
+        Team team = teamRepository.getOne(id);
+        model.addAttribute("team",team);
+        //model.addAttribute("confrontation", new Confrontation());
+        return "coordinator/team/detail";
 
-    @PostMapping("/team/save/{id}")
-    public String saveTeam(Team team, @PathVariable Long id){
-
-        Discipline discipline = disciplineRepository.getOne(id);
-        Optional<Team> teamOptional = teamRepository.findByDiscipline_Id(discipline.getId());
-
-        if (teamOptional.isPresent()){
-
-            return "";
-        }else {
-            try {
-                team.setDiscipline(discipline);
-                teamRepository.save(team);
-                return "";
-            } catch (Exception e) {
-                return "";
-            }
-        }
-    }
-
-
-    @GetMapping("/team/{id}")
-    public String findTeamById(@PathVariable Long id){
-        Optional<Team> teamOptional = teamRepository.findById(id);
-        if (teamOptional.isPresent()){
-            return "";
-        }else {
-            return "";
-        }
     }
 
     @DeleteMapping("/team/delete/{id}")
-    public String deleteTeamById(@PathVariable Long id, Model model){
+    public String deleteTeamById(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
+        Discipline discipline = disciplineRepository.getOne(id);
         Team team = teamRepository.findById(id)
                 .orElseThrow(() ->new IllegalArgumentException("invalid team id:" +id));
+        redirectAttributes.addFlashAttribute("success","Vous avez supprimer cette equipe");
         teamRepository.deleteById(id);
         model.addAttribute("team", teamRepository.findAll());
 
-        return "redirect:/team/all";
+        return "redirect:/coordinator/kidole/discipline/detail/"+discipline.getId();
     }
 
 
-    @GetMapping("/team/{id}/{disciplineId}")
-    public String update(Team team, @PathVariable Long id, @PathVariable Long disciplineId){
-        Optional<Team> teamOptional = teamRepository.findById(id);
+    @GetMapping("/team/update/{id}")
+    public String updateTeam(@PathVariable Long id, Model model){
+        Team team = teamRepository.getOne(id);
+        model.addAttribute("team",team);
+        return "coordinator/team/edit";
+    }
 
-        if (teamOptional.isPresent()){
-            Team team1 = teamOptional.get();
-            team1.setLibelle(team.getLibelle());
-            team1.setName(team.getName());
-            team1.setDiscipline(disciplineRepository.getOne(disciplineId));
+    @PostMapping("/teams/update/{id}")
+    public String teamUpdate(@Valid Team team, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        Discipline discipline = disciplineRepository.getOne(id);
+        team.setName(team.getName().toString());
+        team.setDiscipline(discipline);
+        teamRepository.save(team);
+        redirectAttributes.addFlashAttribute("success","Vous avez modifier avec succes une équipe a cette discipline");
+        return "redirect:/coordinator/kidole/discipline/detail/"+discipline.getId();
 
-            return "";
-        } else {
-            return "";
-        }
+
     }
 
 

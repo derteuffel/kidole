@@ -1,6 +1,7 @@
 package com.derteuffel.kidole.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,6 @@ public class Team implements Serializable {
     private ArrayList<Long> confrontaionsIds = new ArrayList<>();
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("teams")
     private Discipline discipline;
 }

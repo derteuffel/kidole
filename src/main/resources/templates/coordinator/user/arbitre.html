@@ -74,10 +74,10 @@
                                                 <div class="profile-img">
                                                     <img  th:if="${user.photo}" th:src="${user.photo}" alt=""/>
                                                     <img th:unless="${user.photo}" th:src="@{/images/profile.jpeg}" alt=""/>
-                                                    <div class="file btn btn-lg btn-primary">
+                                                  <!--  <div class="file btn btn-lg btn-primary">
                                                             Change Photo
                                                         <input type="file" name="file"/>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

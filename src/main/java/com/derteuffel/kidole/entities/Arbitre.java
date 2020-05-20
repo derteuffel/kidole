@@ -20,4 +20,5 @@ public class Arbitre extends User {
     private String category;
     private String discipline;
 
+
 }
