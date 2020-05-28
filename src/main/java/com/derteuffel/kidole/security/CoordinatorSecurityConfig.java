@@ -28,6 +28,7 @@ public class CoordinatorSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .antMatcher("/coordinator/**").authorizeRequests()
+                .antMatchers("/downloadFile/**").permitAll()
                 .antMatchers("/coordinator/**").access("hasAnyRole('ROLE_ROOT','ROLE_COORDINATOR')")
                 .and()
                 .formLogin()

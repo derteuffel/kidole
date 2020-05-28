@@ -280,7 +280,7 @@ public class ThOrganisateurController {
     public String  save(@Valid AccreditationHelper accreditationHelper,  Long teamId, @PathVariable Long id, RedirectAttributes redirectAttributes) {
 
         Optional<User> user = userRepository.findByFirstnameOrLastname(accreditationHelper.getFirstname(),accreditationHelper.getLastname());
-        Team team = teamRepository.getOne(teamId);
+
         Competition competition = competitionRepository.getOne(id);
         Accreditation accreditation  = new Accreditation();
         Date date = new Date();
@@ -294,18 +294,21 @@ public class ThOrganisateurController {
         fiche.setDescription(accreditationHelper.getDescription());
         fiche.setType(accreditationHelper.getType());
         if (user.isPresent()){
-            accreditation.setUser(user.get());
-            if (!(team.getUsers().contains(user.get()))) {
-                team.getUsers().add(user.get());
+            if (teamId!=null) {
+                Team team = teamRepository.getOne(teamId);
+                accreditation.setUser(user.get());
+                if (!(team.getUsers().contains(user.get()))) {
+                    team.getUsers().add(user.get());
+                }
+                teamRepository.save(team);
+                if (!(user.get().getTeamIds().contains(team.getId()))) {
+                    user.get().getTeamIds().add(team.getId());
+                }
+                if (!(user.get().getCompetIds().contains(competition.getId()))) {
+                    user.get().getCompetIds().add(competition.getId());
+                }
+                userRepository.save(user.get());
             }
-            teamRepository.save(team);
-            if (!(user.get().getTeamIds().contains(team.getId()))) {
-                user.get().getTeamIds().add(team.getId());
-            }
-            if (!(user.get().getCompetIds().contains(competition.getId()))) {
-                user.get().getCompetIds().add(competition.getId());
-            }
-            userRepository.save(user.get());
         }else {
             if (accreditation.getType().contentEquals(EAccreditation.ARBITRE.toString())){
                 Arbitre arbitre = new Arbitre();
@@ -334,135 +337,158 @@ public class ThOrganisateurController {
                 ficheRepository.save(fiche);
                 accreditation.setUser(arbitre);
             }else if (accreditation.getType().contentEquals(EAccreditation.ATHLETE.toString())){
-                Athlete athlete = new Athlete();
-                athlete.setFirstname(accreditationHelper.getFirstname());
-                fiche.setFirstname(accreditationHelper.getFirstname());
-                athlete.setLastname(accreditationHelper.getLastname());
-                fiche.setLastname(accreditationHelper.getLastname());
-                athlete.setBirthday(accreditationHelper.getBirthday());
-                fiche.setBirthday(accreditationHelper.getBirthday());
-                athlete.setEmail(accreditationHelper.getEmail());
-                fiche.setEmail(accreditationHelper.getEmail());
-                athlete.setBirthplace(accreditationHelper.getBirthplace());
-                fiche.setBirthplace(accreditationHelper.getBirthplace());
-                athlete.setPhone(accreditationHelper.getPhone());
-                fiche.setPhone(accreditationHelper.getPhone());
-                athlete.setCountry(accreditationHelper.getCountry().toUpperCase());
-                fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
-                athlete.setRegion(accreditationHelper.getRegion().toUpperCase());
-                fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
-                athlete.setVille(accreditationHelper.getVille().toUpperCase());
-                fiche.setVille(accreditationHelper.getVille().toUpperCase());
-                athlete.setPhoto("/images/icon/avatar-01.jpg");
-                fiche.setPhoto("/images/icon/avatar-01.jpg");
-                athlete.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                athlete.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
-                athlete.setDiscipline(team.getDiscipline().getName());
-                fiche.setDiscipline(team.getDiscipline().getName());
-                athlete.setEquipeOrigin(team.getName());
-                fiche.setEquipeOrigin(team.getName());
-                athlete.setCategory(competition.getCategory());
-                fiche.setCategory(competition.getCategory());
-                athleteRepository.save(athlete);
-                ficheRepository.save(fiche);
-                accreditation.setUser(athlete);
-                team.getUsers().add(athlete);
-                teamRepository.save(team);
+                if (teamId!=null) {
+                    Team team = teamRepository.getOne(teamId);
+                    Athlete athlete = new Athlete();
+                    athlete.setFirstname(accreditationHelper.getFirstname());
+                    fiche.setFirstname(accreditationHelper.getFirstname());
+                    athlete.setLastname(accreditationHelper.getLastname());
+                    fiche.setLastname(accreditationHelper.getLastname());
+                    athlete.setBirthday(accreditationHelper.getBirthday());
+                    fiche.setBirthday(accreditationHelper.getBirthday());
+                    athlete.setEmail(accreditationHelper.getEmail());
+                    fiche.setEmail(accreditationHelper.getEmail());
+                    athlete.setBirthplace(accreditationHelper.getBirthplace());
+                    fiche.setBirthplace(accreditationHelper.getBirthplace());
+                    athlete.setPhone(accreditationHelper.getPhone());
+                    fiche.setPhone(accreditationHelper.getPhone());
+                    athlete.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    athlete.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    athlete.setVille(accreditationHelper.getVille().toUpperCase());
+                    fiche.setVille(accreditationHelper.getVille().toUpperCase());
+                    athlete.setPhoto("/images/icon/avatar-01.jpg");
+                    fiche.setPhoto("/images/icon/avatar-01.jpg");
+                    athlete.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    athlete.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
+                    athlete.setDiscipline(team.getDiscipline().getName());
+                    fiche.setDiscipline(team.getDiscipline().getName());
+                    athlete.setEquipeOrigin(team.getName());
+                    fiche.setEquipeOrigin(team.getName());
+                    athlete.setCategory(competition.getCategory());
+                    fiche.setCategory(competition.getCategory());
+                    athleteRepository.save(athlete);
+                    ficheRepository.save(fiche);
+                    accreditation.setUser(athlete);
+                    team.getUsers().add(athlete);
+                    teamRepository.save(team);
+                }else {
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
             }else if (accreditation.getType().contentEquals(EAccreditation.COMITE.toString())){
-                Comite comite = new Comite();
-                comite.setFirstname(accreditationHelper.getFirstname());
-                fiche.setFirstname(accreditationHelper.getFirstname());
-                comite.setLastname(accreditationHelper.getLastname());
-                fiche.setLastname(accreditationHelper.getLastname());
-                comite.setBirthday(accreditationHelper.getBirthday());
-                fiche.setBirthday(accreditationHelper.getBirthday());
-                comite.setEmail(accreditationHelper.getEmail());
-                fiche.setEmail(accreditationHelper.getEmail());
-                comite.setBirthplace(accreditationHelper.getBirthplace());
-                fiche.setBirthplace(accreditationHelper.getBirthplace());
-                comite.setPhone(accreditationHelper.getPhone());
-                fiche.setPhone(accreditationHelper.getPhone());
-                comite.setCountry(accreditationHelper.getCountry().toUpperCase());
-                fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
-                comite.setRegion(accreditationHelper.getRegion().toUpperCase());
-                fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
-                comite.setVille(accreditationHelper.getVille().toUpperCase());
-                fiche.setVille(accreditationHelper.getVille().toUpperCase());
-                comite.setPhoto("/images/icon/avatar-01.jpg");
-                fiche.setPhoto("/images/icon/avatar-01.jpg");
-                comite.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                comite.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
-                comiteRepository.save(comite);
-                ficheRepository.save(fiche);
-                accreditation.setUser(comite);
-                team.getUsers().add(comite);
-                teamRepository.save(team);
+                if (teamId!=null) {
+                    Team team = teamRepository.getOne(teamId);
+                    Comite comite = new Comite();
+                    comite.setFirstname(accreditationHelper.getFirstname());
+                    fiche.setFirstname(accreditationHelper.getFirstname());
+                    comite.setLastname(accreditationHelper.getLastname());
+                    fiche.setLastname(accreditationHelper.getLastname());
+                    comite.setBirthday(accreditationHelper.getBirthday());
+                    fiche.setBirthday(accreditationHelper.getBirthday());
+                    comite.setEmail(accreditationHelper.getEmail());
+                    fiche.setEmail(accreditationHelper.getEmail());
+                    comite.setBirthplace(accreditationHelper.getBirthplace());
+                    fiche.setBirthplace(accreditationHelper.getBirthplace());
+                    comite.setPhone(accreditationHelper.getPhone());
+                    fiche.setPhone(accreditationHelper.getPhone());
+                    comite.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    comite.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    comite.setVille(accreditationHelper.getVille().toUpperCase());
+                    fiche.setVille(accreditationHelper.getVille().toUpperCase());
+                    comite.setPhoto("/images/icon/avatar-01.jpg");
+                    fiche.setPhoto("/images/icon/avatar-01.jpg");
+                    comite.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    comite.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
+                    comiteRepository.save(comite);
+                    ficheRepository.save(fiche);
+                    accreditation.setUser(comite);
+                    team.getUsers().add(comite);
+                    teamRepository.save(team);
+                }else {
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
+
             }else if (accreditation.getType().contentEquals(EAccreditation.ENTRAINEUR.toString())){
-                Entraineur entraineur = new Entraineur();
-                entraineur.setFirstname(accreditationHelper.getFirstname());
-                fiche.setFirstname(accreditationHelper.getFirstname());
-                entraineur.setLastname(accreditationHelper.getLastname());
-                fiche.setLastname(accreditationHelper.getLastname());
-                entraineur.setBirthday(accreditationHelper.getBirthday());
-                fiche.setBirthday(accreditationHelper.getBirthday());
-                entraineur.setEmail(accreditationHelper.getEmail());
-                fiche.setEmail(accreditationHelper.getEmail());
-                entraineur.setBirthplace(accreditationHelper.getBirthplace());
-                fiche.setBirthplace(accreditationHelper.getBirthplace());
-                entraineur.setPhone(accreditationHelper.getPhone());
-                fiche.setPhone(accreditationHelper.getPhone());
-                entraineur.setCountry(accreditationHelper.getCountry().toUpperCase());
-                fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
-                entraineur.setRegion(accreditationHelper.getRegion().toUpperCase());
-                fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
-                entraineur.setVille(accreditationHelper.getVille().toUpperCase());
-                fiche.setVille(accreditationHelper.getVille().toUpperCase());
-                entraineur.setPhoto("/images/icon/avatar-01.jpg");
-                fiche.setPhoto("/images/icon/avatar-01.jpg");
-                entraineur.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                entraineur.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                entraineur.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
-                entraineur.setDiscipline(team.getDiscipline().getName());
-                fiche.setDiscipline(team.getDiscipline().getName());
-                entraineur.setEquipe(team.getName());
-                fiche.setEquipe(team.getName());
-                entraineur.setCategory(competition.getCategory());
-                fiche.setCategory(competition.getCategory());
-                entraineurRepository.save(entraineur);
-                ficheRepository.save(fiche);
-                accreditation.setUser(entraineur);
-                team.getUsers().add(entraineur);
-                teamRepository.save(team);
+                if (teamId!=null) {
+                    Team team = teamRepository.getOne(teamId);
+                    Entraineur entraineur = new Entraineur();
+                    entraineur.setFirstname(accreditationHelper.getFirstname());
+                    fiche.setFirstname(accreditationHelper.getFirstname());
+                    entraineur.setLastname(accreditationHelper.getLastname());
+                    fiche.setLastname(accreditationHelper.getLastname());
+                    entraineur.setBirthday(accreditationHelper.getBirthday());
+                    fiche.setBirthday(accreditationHelper.getBirthday());
+                    entraineur.setEmail(accreditationHelper.getEmail());
+                    fiche.setEmail(accreditationHelper.getEmail());
+                    entraineur.setBirthplace(accreditationHelper.getBirthplace());
+                    fiche.setBirthplace(accreditationHelper.getBirthplace());
+                    entraineur.setPhone(accreditationHelper.getPhone());
+                    fiche.setPhone(accreditationHelper.getPhone());
+                    entraineur.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    entraineur.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    entraineur.setVille(accreditationHelper.getVille().toUpperCase());
+                    fiche.setVille(accreditationHelper.getVille().toUpperCase());
+                    entraineur.setPhoto("/images/icon/avatar-01.jpg");
+                    fiche.setPhoto("/images/icon/avatar-01.jpg");
+                    entraineur.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    entraineur.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    entraineur.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
+                    entraineur.setDiscipline(team.getDiscipline().getName());
+                    fiche.setDiscipline(team.getDiscipline().getName());
+                    entraineur.setEquipe(team.getName());
+                    fiche.setEquipe(team.getName());
+                    entraineur.setCategory(competition.getCategory());
+                    fiche.setCategory(competition.getCategory());
+                    entraineurRepository.save(entraineur);
+                    ficheRepository.save(fiche);
+                    accreditation.setUser(entraineur);
+                    team.getUsers().add(entraineur);
+                    teamRepository.save(team);
+                }else {
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
             }else if (accreditation.getType().contentEquals(EAccreditation.DIGNITAIRE.toString())){
-                Dignitaire dignitaire = new Dignitaire();
-                dignitaire.setFirstname(accreditationHelper.getFirstname());
-                fiche.setFirstname(accreditationHelper.getFirstname());
-                dignitaire.setLastname(accreditationHelper.getLastname());
-                fiche.setLastname(accreditationHelper.getLastname());
-                dignitaire.setBirthday(accreditationHelper.getBirthday());
-                fiche.setBirthday(accreditationHelper.getBirthday());
-                dignitaire.setEmail(accreditationHelper.getEmail());
-                fiche.setEmail(accreditationHelper.getEmail());
-                dignitaire.setBirthplace(accreditationHelper.getBirthplace());
-                fiche.setBirthplace(accreditationHelper.getBirthplace());
-                dignitaire.setPhone(accreditationHelper.getPhone());
-                fiche.setPhone(accreditationHelper.getPhone());
-                dignitaire.setCountry(accreditationHelper.getCountry().toUpperCase());
-                fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
-                dignitaire.setRegion(accreditationHelper.getRegion().toUpperCase());
-                fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
-                dignitaire.setVille(accreditationHelper.getVille().toUpperCase());
-                fiche.setVille(accreditationHelper.getVille().toUpperCase());
-                dignitaire.setPhoto("/images/icon/avatar-01.jpg");
-                fiche.setPhoto("/images/icon/avatar-01.jpg");
-                dignitaire.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                dignitaire.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
-                dignitaireRepository.save(dignitaire);
-                ficheRepository.save(fiche);
-                accreditation.setUser(dignitaire);
-                team.getUsers().add(dignitaire);
-                teamRepository.save(team);
-            }else if (accreditation.getType().contentEquals(EAccreditation.OFFICIEL.toString())){
+                if (teamId!=null) {
+                    Team team = teamRepository.getOne(teamId);
+                    Dignitaire dignitaire = new Dignitaire();
+                    dignitaire.setFirstname(accreditationHelper.getFirstname());
+                    fiche.setFirstname(accreditationHelper.getFirstname());
+                    dignitaire.setLastname(accreditationHelper.getLastname());
+                    fiche.setLastname(accreditationHelper.getLastname());
+                    dignitaire.setBirthday(accreditationHelper.getBirthday());
+                    fiche.setBirthday(accreditationHelper.getBirthday());
+                    dignitaire.setEmail(accreditationHelper.getEmail());
+                    fiche.setEmail(accreditationHelper.getEmail());
+                    dignitaire.setBirthplace(accreditationHelper.getBirthplace());
+                    fiche.setBirthplace(accreditationHelper.getBirthplace());
+                    dignitaire.setPhone(accreditationHelper.getPhone());
+                    fiche.setPhone(accreditationHelper.getPhone());
+                    dignitaire.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    dignitaire.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    dignitaire.setVille(accreditationHelper.getVille().toUpperCase());
+                    fiche.setVille(accreditationHelper.getVille().toUpperCase());
+                    dignitaire.setPhoto("/images/icon/avatar-01.jpg");
+                    fiche.setPhoto("/images/icon/avatar-01.jpg");
+                    dignitaire.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    dignitaire.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
+                    dignitaireRepository.save(dignitaire);
+                    ficheRepository.save(fiche);
+                    accreditation.setUser(dignitaire);
+                    team.getUsers().add(dignitaire);
+                    teamRepository.save(team);
+                }else {
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
+            }else if (accreditation.getType().contentEquals(EAccreditation.OFFICIEL.toString())) {
+                if (teamId!=null){
+                    Team team = teamRepository.getOne(teamId);
                 Officiciel officiciel = new Officiciel();
                 officiciel.setFirstname(accreditationHelper.getFirstname());
                 fiche.setFirstname(accreditationHelper.getFirstname());
@@ -495,40 +521,48 @@ public class ThOrganisateurController {
                 team.getUsers().add(officiciel);
                 teamRepository.save(team);
             }else {
-                Sparing sparing = new Sparing();
-                sparing.setFirstname(accreditationHelper.getFirstname());
-                fiche.setFirstname(accreditationHelper.getFirstname());
-                sparing.setLastname(accreditationHelper.getLastname());
-                fiche.setLastname(accreditationHelper.getLastname());
-                sparing.setBirthday(accreditationHelper.getBirthday());
-                fiche.setBirthday(accreditationHelper.getBirthday());
-                sparing.setEmail(accreditationHelper.getEmail());
-                fiche.setEmail(accreditationHelper.getEmail());
-                sparing.setBirthplace(accreditationHelper.getBirthplace());
-                fiche.setBirthplace(accreditationHelper.getBirthplace());
-                sparing.setPhone(accreditationHelper.getPhone());
-                fiche.setPhone(accreditationHelper.getPhone());
-                sparing.setCountry(accreditationHelper.getCountry().toUpperCase());
-                fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
-                sparing.setRegion(accreditationHelper.getRegion().toUpperCase());
-                fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
-                sparing.setVille(accreditationHelper.getVille().toUpperCase());
-                fiche.setVille(accreditationHelper.getVille().toUpperCase());
-                sparing.setPhoto("/images/icon/avatar-01.jpg");
-                fiche.setPhoto("/images/icon/avatar-01.jpg");
-                sparing.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
-                sparing.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
-                sparing.setCategory(competition.getCategory());
-                fiche.setCategory(competition.getCategory());
-                sparing.setDiscipline(team.getDiscipline().getName());
-                fiche.setDiscipline(team.getDiscipline().getName());
-                sparing.setEquipeOrigin(team.getName());
-                fiche.setEquipeOrigin(team.getName());
-                sparingRepository.save(sparing);
-                ficheRepository.save(fiche);
-                accreditation.setUser(sparing);
-                team.getUsers().add(sparing);
-                teamRepository.save(team);
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
+            }else {
+                if (teamId!=null) {
+                    Team team = teamRepository.getOne(teamId);
+                    Sparing sparing = new Sparing();
+                    sparing.setFirstname(accreditationHelper.getFirstname());
+                    fiche.setFirstname(accreditationHelper.getFirstname());
+                    sparing.setLastname(accreditationHelper.getLastname());
+                    fiche.setLastname(accreditationHelper.getLastname());
+                    sparing.setBirthday(accreditationHelper.getBirthday());
+                    fiche.setBirthday(accreditationHelper.getBirthday());
+                    sparing.setEmail(accreditationHelper.getEmail());
+                    fiche.setEmail(accreditationHelper.getEmail());
+                    sparing.setBirthplace(accreditationHelper.getBirthplace());
+                    fiche.setBirthplace(accreditationHelper.getBirthplace());
+                    sparing.setPhone(accreditationHelper.getPhone());
+                    fiche.setPhone(accreditationHelper.getPhone());
+                    sparing.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    fiche.setCountry(accreditationHelper.getCountry().toUpperCase());
+                    sparing.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    fiche.setRegion(accreditationHelper.getRegion().toUpperCase());
+                    sparing.setVille(accreditationHelper.getVille().toUpperCase());
+                    fiche.setVille(accreditationHelper.getVille().toUpperCase());
+                    sparing.setPhoto("/images/icon/avatar-01.jpg");
+                    fiche.setPhoto("/images/icon/avatar-01.jpg");
+                    sparing.setCompetIds(new ArrayList<>(Arrays.asList(competition.getId())));
+                    sparing.setTeamIds(new ArrayList<>(Arrays.asList(team.getId())));
+                    sparing.setCategory(competition.getCategory());
+                    fiche.setCategory(competition.getCategory());
+                    sparing.setDiscipline(team.getDiscipline().getName());
+                    fiche.setDiscipline(team.getDiscipline().getName());
+                    sparing.setEquipeOrigin(team.getName());
+                    fiche.setEquipeOrigin(team.getName());
+                    sparingRepository.save(sparing);
+                    ficheRepository.save(fiche);
+                    accreditation.setUser(sparing);
+                    team.getUsers().add(sparing);
+                    teamRepository.save(team);
+                }else {
+                    return "redirect:/coordinator/kidole/accreditations/"+competition.getId();
+                }
             }
 
         }
