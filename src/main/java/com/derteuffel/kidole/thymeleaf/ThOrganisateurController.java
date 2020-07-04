@@ -155,7 +155,14 @@ public class ThOrganisateurController {
         Collection<Competition> competitions = compte.getCompetitions();
         model.addAttribute("lists",competitions);
         model.addAttribute("competition",new Competition());
-        return "coordinator/home";
+        return "home";
+    }
+
+    @GetMapping("/form")
+    public String show(Model model){
+
+        model.addAttribute("competition", new Competition());
+        return "coordinator/competition/form";
     }
 
     @PostMapping("/competition/save")
