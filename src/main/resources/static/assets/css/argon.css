@@ -17741,6 +17741,14 @@ button.bg-darker:focus
     color: red ;
 }
 
+#card-header-color{
+    background-color: #3e4c52 !important;
+}
+
+#couleur-2{
+    color: #FFFFFF !important;
+}
+
 .font-italic
 {
     font-style: italic !important;
@@ -29841,4 +29849,12 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 .bootstrap-datetimepicker-widget.dropdown-black table td .btn[data-action='togglePeriod']
 {
     background: transparent;
+}
+
+body{
+    background: #27AE60;
+}
+
+#card-header-2{
+    color: #3D501C !important;
 }

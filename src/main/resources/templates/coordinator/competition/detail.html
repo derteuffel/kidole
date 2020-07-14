@@ -277,6 +277,73 @@
      <div class="header bg-primary pb-6">
      </div>
      <br>
+     <div class="container-fluid">
+         <div class="row">
+             <div class="col-xl-12 order-xl-12">
+                 <div class="card">
+                     <div class="card-header">
+                         <div class="row align-items-center">
+                             <div class="col">
+                                 <h6 class="text-light text-uppercase ls-1 mb-1">Détail Compétition</h6>
+                             </div>
+                             <div class="col">
+                                 <ul class="nav nav-pills justify-content-end">
+                                     <li class="nav-item" >
+                                         <a  th:href="@{/coordinator/kidole/accreditations/}+${competition.id}" class="nav-link py-2 px-3" data-toggle="tab">
+                                             <span class="d-none d-md-block">Accréditations</span>
+
+                                         </a>
+                                     </li>
+                                     <li class="nav-item" >
+                                         <a th:href="@{}" class="nav-link py-2 px-3" data-toggle="tab">
+                                             <span class="d-none d-md-block">Update competition</span>
+
+                                         </a>
+                                     </li>
+
+                                 </ul>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="card-body">
+                         <div class="col-md-6">
+                             <p class="texte">Code de la competition : &nbsp; <span th:text="${competition.code}"></span></p></br>
+                             <p class="texte">Nom de la competition : &nbsp; <span th:text="${competition.name}"></span></p></br>
+                             <p class="texte">Categorie de la competition : &nbsp; <span th:text="${competition.category}"></span></p></br>
+                         </div>
+
+                         <div class="row my-2">
+                             <div class="col-md-6 ">
+                                 <div class="alert alert-primary py-4 cards_2">
+                                     <p class="texte">Date de debut de la competition : &nbsp; <span th:text="${competition.dateDebut}"></span></p>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="alert alert-info py-4 cards_3">
+                                     <p class="texte">Date de fin de la competition : &nbsp; <span th:text="${competition.dateFin}"></span></p>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="row my-2">
+                             <div class="col-md-6">
+                                 <div class="alert alert-warning py-4 cards_4">
+                                     <p class="texte">Date de debut accreditation : &nbsp; <span th:text="${competition.debutAccreditation}"></span></p>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="alert alert-success py-4 cards_5">
+                                     <p class="texte">Date de fin accreditation : &nbsp; <span th:text="${competition.finAccreditation}"></span></p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+         </div>
+     </div>
+
+
  </div>
 
    <!-- <div class="page-wrapper">
