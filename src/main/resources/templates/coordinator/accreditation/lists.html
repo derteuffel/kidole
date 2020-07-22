@@ -2,327 +2,262 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Liste Accrédité</title>
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/assets/img/brand/kido_01.png}" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/nucleo/css/nucleo.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css}" type="text/css">
 
-    <!-- Title Page-->
-    <title>Accreditations</title>
-
-    <!-- Fontfaces CSS-->
-    <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
-
-    <!-- Bootstrap CSS-->
-    <link th:href="@{/vendor/bootstrap-4.1/bootstrap.min.css}" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link th:href="@{/vendor/animsition/animsition.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/wow/animate.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/css-hamburgers/hamburgers.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/slick/slick.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/select2/select2.min.css}" rel="stylesheet" media="all">
-    <link th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
-    <link th:href="@{/css/datatables/datatables.min.css}" rel="stylesheet" media="all">
+    <link rel="stylesheet" th:href="@{/assets/css/argon.css?v=1.2.0}" type="text/css">
 </head>
-
-<body class="animsition">
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <header th:replace="~{../templates/fragments/mobile-header :: mobile-header}" >
-        </header>
-        <!-- END HEADER MOBILE-->
-
-        <!-- MENU SIDEBAR-->
-        <aside th:replace="~{../templates/fragments/sidebar :: sidebar}" >
-        </aside>
-        <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header th:replace="~{../templates/fragments/header :: header}" >
-            </header>
-            <!-- HEADER DESKTOP-->
-
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="alert alert-info text-center">
-                        <h3><span th:text="${home}"></span></h3>
+<body>
+<!-- Sidenav -->
+<th:block th:include="fragments/sidebar"></th:block>
+<div class="main-content" id="panel">
+    <th:block th:include="fragments/navbar-top"></th:block>
+    <br>
+    <div class="container-fluid">
+        <div class="main-content">
+            <div class="section__content section__content&#45;&#45;p30">
+                <div class="alert alert-info text-center">
+                    <h3><span th:text="${home}"></span></h3>
+                </div>
+                <div class="container-fluid" >
+                    <div class="alert alert-danger outline-light cards">
+                        <table class="table table-borderless">
+                            <tr class="texte">
+                                <td >Code de la competition</td>
+                                <td th:text="${competition.code}">Code de la competition</td>
+                            </tr>
+                            <tr class="texte">
+                                <td >Nom de la competition</td>
+                                <td th:text="${competition.name}">Code de la competition</td>
+                            </tr>
+                            <tr class="texte">
+                                <td >Categorie de la competition</td>
+                                <td  th:text="${competition.category}">Code de la competition</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="container-fluid" >
-                        <div class="alert alert-danger outline-light cards">
-                            <table class="table table-borderless">
-                                <tr class="texte">
-                                    <td >Code de la competition</td>
-                                    <td th:text="${competition.code}">Code de la competition</td>
-                                </tr>
-                                <tr class="texte">
-                                    <td >Nom de la competition</td>
-                                    <td th:text="${competition.name}">Code de la competition</td>
-                                </tr>
-                                <tr class="texte">
-                                    <td >Categorie de la competition</td>
-                                    <td  th:text="${competition.category}">Code de la competition</td>
-                                </tr>
-                            </table>
-                        </div>
+                </div>
+                <div class=" my-2">
+                    <div th:if="${error}" class="alert alert-danger">
+                        <span th:text="${error}"></span>
                     </div>
-                    <div class=" my-2">
-                        <div th:if="${error}" class="alert alert-danger">
-                            <span th:text="${error}"></span>
-                        </div>
-                        <div th:if="${success}" class="alert alert-success">
-                            <span th:text="${success}"></span>
-                        </div>
-                        <div class="row px-3">
-                            <div class="alert alert-warning col-md-8">
-                                <h3><span>Tableau</span></h3>
-                            </div>
-                            <div class="button col-md-4">
-                                <a href="#" type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right buton" > Nouvelle Accreditation&nbsp;&nbsp; <i class="fa fa-plus"></i></a>
-                            </div>
+                    <div th:if="${success}" class="alert alert-success">
+                        <span th:text="${success}"></span>
+                    </div>
+                    <div class="row">
+
+                        <div class="button col-md-4">
+                            <a href="#" type="button" data-toggle="modal"  data-target="#addModal" class="btn btn-primary pull-right buton" > Nouvelle Accreditation&nbsp;&nbsp; <i class="fa fa-plus"></i></a>
                         </div>
 
-                        <div class="table-responsive table--no-card m-b-30">
-                            <table class="table table-borderless table-striped" id="add-row">
-                                <thead class="badge-secondary">
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Decision</th>
-                                    <th>Type d'accreditation</th>
-                                    <th class="text-right">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="item : ${lists}">
-                                    <td th:text="${item.name}"></td>
-                                    <td th:text="${item.status}"></td>
-                                    <td th:text="${item.date}"></td>
-                                    <td th:text="${item.description}"></td>
-                                    <td><span th:if="${item.retenus}==true">Retenue</span>
-                                        <span th:unless="${item.retenus}==true">Rejeter</span>
-                                    </td>
-                                    <td th:text="${item.type}"></td>
-                                    <td >
-                                        <a th:href="@{/coordinator/kidole/accreditation/detail/}+${item.id}" class="btn text-success"> <i class="fa fa-eye"></i></a>
-                                        <a th:href="@{/coordinator/kidole/accreditation/update/}+${item.id}" class="btn text-primary"> <i class="fa fa-edit"></i></a>
-                                        <button type="button" data-toggle="modal"  data-target="#deleteModal" class="btn text-danger" th:attr="data-target='#deleteModal'+${item.id}" ><i class="fa fa-trash"></i></button>
-                                        <!-- modal medium -->
-                                        <div class="modal fade" th:id="deleteModal+${item.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel">Suppression d'une accreditation </h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Etes vous sure de vouloir supprimer cette element???</p>
+                    </div>
+                    <br>
+                    <div class="table-responsive table&#45;&#45;no-card m-b-30">
+                        <table class="table table-borderless table-striped" id="add-row">
+                            <thead class="badge-secondary">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Decision</th>
+                                <th>Type d'accreditation</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${lists}">
+                                <td th:text="${item.name}"></td>
+                                <td th:text="${item.status}"></td>
+                                <td th:text="${item.date}"></td>
+                                <td th:text="${item.description}"></td>
+                                <td><span th:if="${item.retenus}==true">Retenue</span>
+                                    <span th:unless="${item.retenus}==true">Rejeter</span>
+                                </td>
+                                <td th:text="${item.type}"></td>
+                                <td >
+                                    <a th:href="@{/coordinator/kidole/accreditation/detail/}+${item.id}" class="btn text-primary"> <i class="fa fa-eye"></i></a>
+                                    <a th:href="@{/coordinator/kidole/accreditation/update/}+${item.id}" class="btn text-primary"> <i class="fa fa-edit"></i></a>
+                                    <button type="button" data-toggle="modal"  data-target="#deleteModal" class="btn text-primary" th:attr="data-target='#deleteModal'+${item.id}" ><i class="fa fa-trash"></i></button>
+                                    <div class="modal fade" th:id="deleteModal+${item.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel">Suppression d'une accreditation </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Etes vous sure de vouloir supprimer cette element???</p>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
-                                                        <a th:href="@{/coordinator/kidole/accreditation/delete/}+${item.id}" class="btn btn-primary buton">Oui</a>
-                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
+                                                    <a th:href="@{/coordinator/kidole/accreditation/delete/}+${item.id}" class="btn btn-primary buton">Oui</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- end modal medium -->
-                                    </td>
+                                    </div>
+                                </td>
 
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div th:replace="~{../templates/fragments/footer :: footer}">
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- modal medium -->
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addModalLabel">Ajouter une Accreditation </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Formulaire d'ajout d'une nouvelle accreditation</p>
-
-                            <form th:action="@{/coordinator/kidole/accreditation/save/}+${competition.id}" method="post"  th:object="${accreditationHelper}" class="form-horizontal">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Nom</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{lastname}" placeholder="Nom">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Prenom</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{firstname}" placeholder="Prenom">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">E-mail</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="email" class="form-control" th:field="*{email}" placeholder="Adresse e-mail">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Telephone</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{phone}" placeholder="Numero de telephone">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Date de naissance</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{birthday}" placeholder="Naissance">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Lieu de naissance</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{birthplace}" placeholder="Lieu de naissance">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Nationalite</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{country}" placeholder="Pays d'origine">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Region</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{region}" placeholder="Region d'origine">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Ville d'origine</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" class="form-control" th:field="*{ville}" placeholder="Ville d'origine">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Description</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <textarea th:field="*{description}"   rows="5" placeholder="Entree une description pour cette nouvelle accreditation" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Type d'athlete</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <select th:field="*{type}"  class="form-control">
-                                            <option value="">Choisir</option>
-                                            <option th:each="type : ${T(com.derteuffel.kidole.enums.ETypeAccreditation).values()}" th:value="${type}" th:text="${type}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label  class=" form-control-label">Equipe  d'appartenance</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <select name="teamId"  class="form-control">
-                                            <option value="">Choisir</option>
-                                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
-                                    <button type="submit" class="btn btn-primary buton">Enregistrer</button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end modal medium -->
-            <!-- END PAGE CONTAINER-->
         </div>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">Ajouter une Accreditation </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Formulaire d'ajout d'une nouvelle accreditation</p>
 
+                        <form th:action="@{/coordinator/kidole/accreditation/save/}+${competition.id}" method="post"  th:object="${accreditationHelper}" class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Nom</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{lastname}" placeholder="Nom">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Prenom</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{firstname}" placeholder="Prenom">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">E-mail</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="email" class="form-control" th:field="*{email}" placeholder="Adresse e-mail">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Telephone</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{phone}" placeholder="Numero de telephone">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Date de naissance</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{birthday}" placeholder="Naissance">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Lieu de naissance</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{birthplace}" placeholder="Lieu de naissance">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Nationalite</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{country}" placeholder="Pays d'origine">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Region</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{region}" placeholder="Region d'origine">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Ville d'origine</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" class="form-control" th:field="*{ville}" placeholder="Ville d'origine">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Description</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea th:field="*{description}"   rows="5" placeholder="Entree une description pour cette nouvelle accreditation" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Type d'athlete</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select th:field="*{type}"  class="form-control">
+                                        <option value="">Choisir</option>
+                                        <option th:each="type : ${T(com.derteuffel.kidole.enums.ETypeAccreditation).values()}" th:value="${type}" th:text="${type}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label  class=" form-control-label">Equipe  d'appartenance</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="teamId"  class="form-control">
+                                        <option value="">Choisir</option>
+                                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary red-buton" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary buton">Enregistrer</button>
+                            </div>
+                        </form>
 
-    </div>
+                    </div>
+                </div>
+            </div>
+        </div>    </div>
+</div>
 
-    <!-- Jquery JS-->
-    <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
-    <!-- Bootstrap JS-->
-    <script th:src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
-    <!-- Vendor JS       -->
-    <script th:src="@{/vendor/slick/slick.min.js}">
-    </script>
-    <script th:src="@{/vendor/wow/wow.min.js}"></script>
-    <script th:src="@{/vendor/animsition/animsition.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
-    </script>
-    <script th:src="@{/vendor/counter-up/jquery.waypoints.min.js}"></script>
-    <script th:src="@{/vendor/counter-up/jquery.counterup.min.js}">
-    </script>
-    <script th:src="@{/vendor/circle-progress/circle-progress.min.js}"></script>
-    <script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
-    <script th:src="@{/vendor/chartjs/Chart.bundle.min.js}"></script>
-    <script th:src="@{/vendor/select2/select2.min.js}">
-    </script>
-
-    <!-- Main JS-->
-    <script th:src="@{/js/main.js}"></script>
-    <script th:src="@{/js/datatables/datatables.min.js}"></script>
-    <script >
-        $(document).ready(function() {
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-        });
-    </script>
-
+<script th:src="@{/assets/vendor/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/js-cookie/js.cookie.js}"></script>
+<script th:src="@{/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js}"></script>
+<script th:src="@{/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js}"></script>
+<!-- Optional JS -->
+<script th:src="@{/assets/vendor/chart.js/dist/Chart.min.js}"></script>
+<script th:src="@{/assets/vendor/chart.js/dist/Chart.extension.js}"></script>
+<!-- Argon JS -->
+<script th:src="@{/assets/js/argon.js?v=1.2.0}"></script>
 </body>
 
 </html>
-<!-- end document-->
+
+
+

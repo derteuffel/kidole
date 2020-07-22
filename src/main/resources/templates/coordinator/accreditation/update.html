@@ -2,26 +2,152 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Update</title>
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/assets/img/brand/kido_01.png}" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/nucleo/css/nucleo.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css}" type="text/css">
+
+    <link rel="stylesheet" th:href="@{/assets/css/argon.css?v=1.2.0}" type="text/css">
+</head>
+<body>
+<!-- Sidenav -->
+<th:block th:include="fragments/sidebar"></th:block>
+<div class="main-content" id="panel">
+    <th:block th:include="fragments/navbar-top"></th:block>
+    <br>
+    <div class="container-fluid">
+        <div class="main-content">
+            <div class="section__content section__content&#45;&#45;p30">
+                <div class="alert alert-info text-center">
+                    <h3>Mises a jour de l'accreditation de : <span th:text="${accreditation.name}"></span></h3>
+                </div>
+                <div class=" my-2">
+                    <div th:if="${error}" class="alert alert-danger">
+                        <span th:text="${error}"></span>
+                    </div>
+                    <div th:if="${success}" class="alert alert-success">
+                        <span th:text="${success}"></span>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="header-body">
+                            <div class="row">
+                                <div class="col-xl-12 order-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row align-items-center">
+                                                <div class="col-8">
+                                                    <h3 class="mb-0">Mettre à jour les informations </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form th:action="@{/coordinator/kidole/accreditation/save/}+${accreditation.competition.id}" method="post"  th:object="${accreditation}" class="form-horizontal">
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label  class=" form-control-label">Nom</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="text" class="form-control" th:field="*{name}" placeholder="Nom">
+                                                        <input type="hidden" class="form-control" th:field="*{id}" placeholder="Nom">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label  class=" form-control-label">Description</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <textarea th:field="*{description}"   rows="5" placeholder="Entree une description pour cette nouvelle accreditation" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label  class=" form-control-label">Type d'athlete</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <select th:field="*{type}"  class="form-control">
+                                                            <option value="">Choisir</option>
+                                                            <option th:each="type : ${T(com.derteuffel.kidole.enums.ETypeAccreditation).values()}" th:value="${type}" th:text="${type}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label  class=" form-control-label">Equipe  d'appartenance</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <select name="teamId"  class="form-control">
+                                                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <a th:href="@{/coordinator/kidole/accreditations/}+${accreditation.competition.id}"  class="btn btn-secondary red-buton" >Retour</a>
+                                                    <button type="submit" class="btn btn-primary buton">Enregistrer</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/vendor/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/js-cookie/js.cookie.js}"></script>
+<script th:src="@{/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js}"></script>
+<script th:src="@{/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js}"></script>
+<!-- Optional JS -->
+<script th:src="@{/assets/vendor/chart.js/dist/Chart.min.js}"></script>
+<script th:src="@{/assets/vendor/chart.js/dist/Chart.extension.js}"></script>
+<!-- Argon JS -->
+<script th:src="@{/assets/js/argon.js?v=1.2.0}"></script>
+</body>
+
+</html>
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    &lt;!&ndash; Required meta tags&ndash;&gt;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
 
-    <!-- Title Page-->
+    &lt;!&ndash; Title Page&ndash;&gt;
     <title>Accreditations</title>
 
-    <!-- Fontfaces CSS-->
+    &lt;!&ndash; Fontfaces CSS&ndash;&gt;
     <link th:href="@{/css/font-face.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/font-awesome-4.7/css/font-awesome.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/font-awesome-5/css/fontawesome-all.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
 
-    <!-- Bootstrap CSS-->
+    &lt;!&ndash; Bootstrap CSS&ndash;&gt;
     <link th:href="@{/vendor/bootstrap-4.1/bootstrap.min.css}" rel="stylesheet" media="all">
 
-    <!-- Vendor CSS-->
+    &lt;!&ndash; Vendor CSS&ndash;&gt;
     <link th:href="@{/vendor/animsition/animsition.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/wow/animate.css}" rel="stylesheet" media="all">
@@ -30,33 +156,33 @@
     <link th:href="@{/vendor/select2/select2.min.css}" rel="stylesheet" media="all">
     <link th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" rel="stylesheet" media="all">
 
-    <!-- Main CSS-->
+    &lt;!&ndash; Main CSS&ndash;&gt;
     <link th:href="@{/css/theme.css}" rel="stylesheet" media="all">
 
 </head>
 
 <body class="animsition">
     <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
+        &lt;!&ndash; HEADER MOBILE&ndash;&gt;
         <header th:replace="~{../templates/fragments/mobile-header :: mobile-header}" >
         </header>
-        <!-- END HEADER MOBILE-->
+        &lt;!&ndash; END HEADER MOBILE&ndash;&gt;
 
-        <!-- MENU SIDEBAR-->
+        &lt;!&ndash; MENU SIDEBAR&ndash;&gt;
         <aside th:replace="~{../templates/fragments/sidebar :: sidebar}" >
         </aside>
-        <!-- END MENU SIDEBAR-->
+        &lt;!&ndash; END MENU SIDEBAR&ndash;&gt;
 
-        <!-- PAGE CONTAINER-->
+        &lt;!&ndash; PAGE CONTAINER&ndash;&gt;
         <div class="page-container">
-            <!-- HEADER DESKTOP-->
+            &lt;!&ndash; HEADER DESKTOP&ndash;&gt;
             <header th:replace="~{../templates/fragments/header :: header}" >
             </header>
-            <!-- HEADER DESKTOP-->
+            &lt;!&ndash; HEADER DESKTOP&ndash;&gt;
 
-            <!-- MAIN CONTENT-->
+            &lt;!&ndash; MAIN CONTENT&ndash;&gt;
             <div class="main-content">
-                <div class="section__content section__content--p30">
+                <div class="section__content section__content&#45;&#45;p30">
                     <div class="alert alert-info text-center">
                         <h3>Mises a jour de l'accreditation de : <span th:text="${accreditation.name}"></span></h3>
                     </div>
@@ -119,19 +245,19 @@
                     </div>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
+            &lt;!&ndash; END MAIN CONTENT&ndash;&gt;
+            &lt;!&ndash; END PAGE CONTAINER&ndash;&gt;
         </div>
 
 
     </div>
 
-    <!-- Jquery JS-->
+    &lt;!&ndash; Jquery JS&ndash;&gt;
     <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>
-    <!-- Bootstrap JS-->
+    &lt;!&ndash; Bootstrap JS&ndash;&gt;
     <script th:src="@{/vendor/bootstrap-4.1/popper.min.js}"></script>
     <script th:src="@{/vendor/bootstrap-4.1/bootstrap.min.js}"></script>
-    <!-- Vendor JS       -->
+    &lt;!&ndash; Vendor JS       &ndash;&gt;
     <script th:src="@{/vendor/slick/slick.min.js}">
     </script>
     <script th:src="@{/vendor/wow/wow.min.js}"></script>
@@ -147,10 +273,11 @@
     <script th:src="@{/vendor/select2/select2.min.js}">
     </script>
 
-    <!-- Main JS-->
+    &lt;!&ndash; Main JS&ndash;&gt;
     <script th:src="@{/js/main.js}"></script>
 
 </body>
 
 </html>
-<!-- end document-->
+&lt;!&ndash; end document&ndash;&gt;
+-->

@@ -1,53 +1,15 @@
-<!-- MENU SIDEBAR-->
-<aside th:fragment="sidebar" class="menu-sidebar d-none d-lg-block">
-    <div class="logo">
-        <a href="#">
-            <img src="/images/icon/kido_01.png" alt="K" class="k" />&nbsp; &nbsp;
-            <img src="/images/icon/kido_02.png" alt="Kidole" class="kidole"/>
-        </a>
-    </div>
-    <div class="menu-sidebar__content js-scrollbar1">
-        <nav class="navbar-sidebar">
-            <!-- Sidebar Header-->
-            <!--<div class="sidebar-header d-flex align-items-center" style="background: #97B5B7">
-                <div class="avatar"><img th:src="${session.compte.avatar}" alt="..." class="img-fluid rounded-circle"></div>
-                <div class="title">
-                    <h1 class="h4" th:text="${session.compte.username}"></h1>
-                </div>
-            </div>-->&nbsp;&nbsp;
-            <!-- Sidebar Navidation Menus-->
-            <span class="heading"></span>
-            <ul class="list-unstyled navbar__list">
-                <li class="active sidebar-list-item" >
-                    <a  th:href="@{/coordinator/kidole/home}" class="sidebar-link text-muted active">&nbsp;&nbsp;
-                        Mes competitions
-                    </a>
-                </li>
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="scrollbar-inner">
+        <!-- Brand -->
+        <div class="sidenav-header  align-items-center">
+            <a class="navbar-brand" href="javascript:void(0)">
+                <img th:src="@{/assets/img/brand/kido_02.png}" class="navbar-brand-img" alt="...">
+            </a>
+        </div>
+        <div class="navbar-inner" th:replace="~{../templates/fragments/navbar :: navbar}">
+            <!-- Collapse -->
 
-               <!--
-                 <li>
-                    <a href="#" class="sidebar-link text-muted">
-                       Accreditations</a>
-                </li>
-                <li>
-                    <a href="table.html" class="sidebar-link text-muted">
-                        <i class="fas fa-table"></i>Tables</a>
-                </li>
-                <li>
-                    <a href="form.html">
-                        <i class="far fa-check-square"></i>Forms</a>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-link text-muted">
-                        <i class="fas fa-calendar-alt"></i>Calendar</a>
-                </li>
-                <li>
-                    <a href="map.html" class="sidebar-link text-muted">
-                        <i class="fas fa-map-marker-alt"></i>Maps</a>
-                </li>-->
-
-            </ul>
-        </nav>
+        </div>
     </div>
-</aside>
-<!-- END MENU SIDEBAR-->
+</nav>
